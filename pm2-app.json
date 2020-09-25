@@ -1,7 +1,7 @@
 {
     "apps": [
         {
-            "name": "little-eagle-and-mich",
+            "name": "little-eagle-and-mich-client",
             "script": "npm",
             "args" : "run start"
         }
