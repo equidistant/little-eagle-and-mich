@@ -62,7 +62,7 @@ const Overlay = styled.div`
 		${Root}:hover &{
 			opacity: 1;
 		}
-		background:  linear-gradient(0deg, rgba(130, 198, 219, 1), rgba(130, 198, 219, 1)), url(${props => props.img});
+		background:  linear-gradient(0deg, rgba(130, 198, 219, 1), rgba(130, 198, 219, 1));
 	`}
 	border-radius: 20px 2px;
 `

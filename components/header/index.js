@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { logoTextImg } from '../../images'
+import IconLink from './IconLink'
 import NavLink from './NavLink'
 import Search from './Search'
 import { useScrolledDirection } from '../../common'
@@ -9,9 +10,11 @@ const Header = () => {
 	return (
 		<Root scrolled={scrolled} transparent={scrollY === 0}>
 			<Center>
-				<Logo src={logoTextImg}/>
+				<IconLink href='/'>
+					<Logo src={logoTextImg} />
+				</IconLink>
 				<Links>
-					<NavLink href='/' name='Vikend izleti'/>
+					<NavLink href='/weekend' name='Vikend izleti'/>
 					<NavLink href='/' name='Lokalna putovanja'/>
 					<NavLink href='/' name='Daleka putovanja'/>
 					<NavLink href='/' name='Fotogalerija'/>

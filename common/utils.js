@@ -5,3 +5,7 @@ export const paginate = ({ images, nPerPage = 20 }) => {
     }
     return paginatedImages
   }  
+
+export const getRandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+}

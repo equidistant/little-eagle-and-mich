@@ -1,35 +1,24 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { coverHomeImg } from '../images'
-import { H1, Subheading, BlogCategories, LatestBlogs, RandomGallery, RandomVideo, WhoAreWe, Newsletter } from '../components'
+import { coverWeekendImg } from '../images'
+import { H1, Subheading,  RecommendedBlogs, AllBlogs } from '../components'
 import useSWR, { mutate } from 'swr'
-import { paginate, useRandomGallery } from '../common'
+import { paginate, useRandomGallery, getRandomInt } from '../common'
 
 export async function getServerSideProps() {
-  const resTitles = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/titles`)
-  const titles = await resTitles.json()
-  const title = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
-
-  const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${title}`)
-  const gallery = await resGallery.json()
-
   const resWeekendPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=weekend`)
   const weekendPosts = await resWeekendPost.json()
-
-  const resLocalPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=local`)
-  const localPosts = await resLocalPost.json()
-
-  const resDistantPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=distant`)
-  const distantPosts = await resDistantPost.json()
-
-  const initialPosts = [weekendPosts[0], localPosts[0], distantPosts[0]]
-
-  return { 
-    props: { 
-      initialTitle: title, 
-      initialGallery: gallery,
-      initialPosts,
-      titles: titles
+ 
+  let index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
+  while (index[0] === index[1]) {
+    index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
+  }
+  const recommendedPosts = [weekendPosts[index[0]], weekendPosts[index[1]]]
+  
+  return {
+    props: {
+      recommendedPosts,
+      posts: weekendPosts
     }
   }
 }
@@ -42,32 +31,25 @@ const fetcher = async (url) => {
     return response.json()
 }
 
-const HomePage = ({ initialTitle, initialGallery, initialPosts, titles }) => {
-  const [title, longTitle, gallery, handleNext] = useRandomGallery({ titles })
-  // const { data: gallery, error } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${title}`, fetcher, { initialData: initialGallery })
-  // let paginatedGallery = paginate({ images: JSON.parse(JSON.stringify(gallery.low)), nPerPage: 20 })
+const HomePage = ({ posts, recommendedPosts }) => {
 	return (
     <Root>
-        <Cover img={coverHomeImg}>
+        <Cover img={coverWeekendImg}>
           <HeadersRoot>
             <HeadersCenter>
-              <H1>LittleEagle&Mich</H1>
+              <H1>Vikend izleti</H1>
                 <PSubheading>
-                  Putopisne ideje i savjeti za ljude koji vole putovati, no nemaju puno vremena.
+                  Savjeti i ideje oko vikend izleta u Hrvatskoj i okolici, gdje i kako kampirati, što posjetiti
                 </PSubheading>
               <SubheadingButton>
-                Kreni na avanturu
+                Kreni istraživati!
               </SubheadingButton>
             </HeadersCenter>
           </HeadersRoot>
         </Cover>
         <ContentRoot>
-          <BlogCategories/>
-          <LatestBlogs posts={initialPosts}/>
-          {gallery.low && <RandomGallery longTitle={longTitle} title={title} images={gallery.low} width={940} numOfRows={2} handleNext={handleNext} />} 
-          <WhoAreWe/>
-          <RandomVideo/>
-          <Newsletter/>
+          <RecommendedBlogs posts={recommendedPosts} color='orange'/>
+          <AllBlogs title={'Vikend putopisi'} posts={posts} color='orange'/>
         </ContentRoot>
     </Root>
   )
@@ -107,12 +89,12 @@ const HeadersCenter = styled.div`
 `
 
 const PSubheading = styled(Subheading)`
-  width: 70%;
+  width: 95%;
   margin-top: 25px;
 `
 
 const SubheadingButton = styled.button`
-  border: 3px solid #FFFCF9;
+  border: 3px solid #E8A87C;
   border-radius: 20px 2px;
   width: 231px;
   height: 40px;
@@ -129,6 +111,7 @@ const SubheadingButton = styled.button`
   margin-top: 25px;
   margin-left: 160px;
   cursor: pointer;
+  background: #E8A87C;
 `
 
 const ContentRoot = styled.div`

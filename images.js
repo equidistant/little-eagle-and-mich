@@ -4,6 +4,10 @@ const URL = process.env.NEXT_PUBLIC_STATIC_URL
 
 export const logoTextImg = `${URL}/logo/logo-text.png`
 export const coverHomeImg = `${URL}/cover/home.jpg`
+export const coverWeekendImg = `${URL}/cover/weekend.jpg`
+export const coverLocalImg = `${URL}/cover/local.jpg`
+export const coverDistantImg = `${URL}/cover/distant.jpg`
+
 export const anaImg = `${URL}/ana.png`
 export const michImg = `${URL}/mich.png`
 

@@ -70,6 +70,8 @@ export const Subtitle = styled.p`
   line-height: 18px;
   color: #434850;
   text-align: center;
+  text-align: ${props => props.textAlign};
+
 `
 
 export const DateLocation = styled.p`

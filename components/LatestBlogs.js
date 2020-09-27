@@ -23,7 +23,7 @@ const LatestBlogs = ({ posts }) => {
 							<TextCardContent>
 								<DateLocation>15.02.2020 | Lokacija</DateLocation>
 								<SH3 active={index === 0} color='orange'>{posts[0].longTitle}</SH3>
-								<Subtitle>
+								<Subtitle textAlign='start'>
 								{posts[0].description}
 								</Subtitle>
 							</TextCardContent>
@@ -33,7 +33,7 @@ const LatestBlogs = ({ posts }) => {
 							<TextCardContent>
 								<DateLocation>15.02.2020 | Lokacija</DateLocation>
 								<SH3 active={index === 1} color='green'>{posts[1].longTitle}</SH3>
-								<Subtitle>
+								<Subtitle textAlign='start'>
 								{posts[1].description}
 								</Subtitle>
 							</TextCardContent>
@@ -43,7 +43,7 @@ const LatestBlogs = ({ posts }) => {
 							<TextCardContent>
 								<DateLocation>15.02.2020 | Lokacija</DateLocation>
 								<SH3 active={index === 2} color='blue'>{posts[2].longTitle}</SH3>
-								<Subtitle>
+								<Subtitle textAlign='start'>
 								{posts[2].description}
 								</Subtitle>
 							</TextCardContent>
@@ -92,6 +92,7 @@ const Cards = styled.div`
 	display: flex;	
 	flex-direction: column;
 	width: 460px;
+	margin-left: 10px;
 `
 
 const OrangeCard = styled.div`
