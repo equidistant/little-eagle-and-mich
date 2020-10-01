@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { coverWeekendImg } from '../images'
-import { H1, Subheading,  RecommendedBlogs, AllBlogs, GalleryList, YoutubeVideo, Newsletter } from '../components'
+import { H1, Subheading,  RecommendedBlogs, AllBlogs, GalleryList } from '../components'
 import useSWR, { mutate } from 'swr'
 import { paginate, useRandomGallery, getRandomInt } from '../common'
 
@@ -55,8 +55,6 @@ const HomePage = ({ posts, recommendedPosts, galleries }) => {
           <RecommendedBlogs posts={recommendedPosts} color='orange'/>
           <AllBlogs title={'Vikend putopisi'} posts={posts} color='orange'/>
           <GalleryList title={'Foto galerija'} galleries={galleries} color='#E8A87C'/>
-          <YoutubeVideo title='Najnovija vikend avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/8eBgcVkIFrs'/>
-          <Newsletter/>
         </ContentRoot>
     </Root>
   )

@@ -3,51 +3,26 @@ import debounce from 'lodash.debounce'
 import _ from 'lodash'
 
 
-// export const useRandomGallery = ({ titles }) => {
-//   const [title, setTitle] = useState('')
-//   const [gallery, setGallery] = useState({})
-//   const handleNext = async () => {
-//      let nextTitle = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
-//     while(nextTitle === title) {
-//       nextTitle = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
-//     }
-//     const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${nextTitle}`)
-//     const newGallery = await resGallery.json()
-//     setTitle(nextTitle)
-//     setGallery(newGallery)
-//   }
-//   useEffect(() => {
-//     handleNext()
-//   }, [])
-//   return [title, gallery, handleNext]
-// }
-
-export const useRandomGallery = ({ titles }) => {
-  const [title, setTitle] = useState('')
-  const [longTitle, setLongTitle] = useState('')
-  const [nextTitle, setNextTitle] = useState(titles[Math.floor(Math.random() * Math.floor(titles.length))].title)
+export const useRandomGallery = ({ initialGalleries }) => {
+  const [nextTitle, setNextTitle] = useState(initialGalleries[Math.floor(Math.random() * Math.floor(initialGalleries.length))].title)
   const [gallery, setGallery] = useState({})
   const handleNext = async () => {
-    let newTitle = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
-    while(newTitle === title) {
-      newTitle = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
+    let newTitle = initialGalleries[Math.floor(Math.random() * Math.floor(initialGalleries.length))].title
+    while(newTitle === gallery.title) {
+      newTitle = initialGalleries[Math.floor(Math.random() * Math.floor(initialGalleries.length))].title
     }
     setNextTitle(newTitle)
   }
   useEffect(() => {
     const loadNextGallery = async () => {
-      const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${nextTitle}`)
-      const newGallery = await resGallery.json()
-      setLongTitle(newGallery.longTitle)
-      setGallery(newGallery)
+      setGallery(initialGalleries.find(gallery => gallery.title === nextTitle))
     }
-    if (title !== nextTitle) {
-      setTitle(nextTitle)
+    if (gallery.title !== nextTitle) {
       loadNextGallery()
     }
     
   }, [nextTitle])
-  return [title, longTitle, gallery, handleNext]
+  return [gallery, handleNext]
 }
 
 export const useRows = ({ images, width, numOfRows, gap }) => {
@@ -196,4 +171,3 @@ const checkScrolled = ({ boundary, scrollY }) => {
 }
 
 
-export default useScrolledDirection

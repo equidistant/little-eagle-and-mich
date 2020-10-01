@@ -1,16 +1,25 @@
 import Link from 'next/link'
-import styled, { css } from 'styled-components'
-import { H2, H3, Subtitle, DateLocation } from './text'
+import styled, { css, useTheme } from 'styled-components'
+import { H2, H4, Subtitle, DateLocation } from './text'
 import BlogCategoryCard from './BlogCategoryCard.js.js'
+import { getRandomInt, getColor } from '../common'
 
-const RecommendedBlogs = ({ color, posts }) => {
-
+const ExploreBlogs = ({ posts, title }) => {
+	let explorePosts = []
+	for (let i = 0; i < 2; i++) {
+		let post = posts[getRandomInt(posts.length)]
+		while (post.title === title || (explorePosts.length === 1 && explorePosts[0].title === post.title)) {
+			post = posts[getRandomInt(posts.length)]
+		}
+		explorePosts.push(post)
+	}
+	const theme = useTheme()
 	return (
 		<Root>
 			<Center>
-				<SH2>Preporučeni izleti</SH2>
+				<SH2>Nastavi istraživati putopise:</SH2>
 				<Cards>
-					{posts.map((post, index) => <CCard post={post} color={color} key={index}/>)}
+					{explorePosts.map((post, index) => <CCard post={post} color={getColor({ tags: post.tags, theme })} key={index}/>)}
 				</Cards>
 			</Center>
 		</Root>
@@ -28,8 +37,8 @@ const Root = styled.div`
 const Center = styled.div`
 	width: min-content;
 	display: flex;
+	align-items: center;
 	flex-direction: column;
-	margin-left: 80px;
 `
 
 const SH2 = styled(H2)`
@@ -38,19 +47,19 @@ const SH2 = styled(H2)`
 
 const Cards = styled.div`
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	margin-top: 40px;
-	width: 780px;
-	margin-left: 10px;
+	width: 940px;
+	height: 130px;
 `
 
 const Card = styled.div`
 	width: 100%;
 	position: relative;
 	border-radius: 20px 2px;
-	margin-top: 40px;
+	margin-left: 24px;
 	&:first-of-type {
-		margin-top: 0;
+		margin-left: 0;
 	}
 	cursor: pointer;
 `
@@ -63,15 +72,7 @@ const CardBackground = styled.div`
 	width: 100%;
 	height: 100%;
 	z-index: -1;
-	${props => props.color === 'orange' && css`
-		background: #E8A87C;
-	`}
-	${props => props.color === 'green' && css`
-	background: #41B3A3;
-	`}
-	${props => props.color === 'blue' && css`
-	background: #82C6DB;
-	`}
+	background: ${props => props.color};
 `
 
 const CardContent = styled.div`
@@ -83,24 +84,25 @@ const CardContent = styled.div`
 `
 
 const CardImage = styled.img`
-	width: 50%;
+	width: 140px;
+	height: 130px;
 	border-radius: 20px 2px;
 `
 
 const CardText = styled.div`
-	width: 50%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	padding-left: 20px;
-	padding-right: 50px;
-	padding-top: 80px;
-	padding-bottom: 70px;
+	margin-top: 5px;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 5px;
 `
 
 const DateLocationRow = styled.div`
 	display: flex;
 	width: 100%;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 `
 
@@ -111,28 +113,36 @@ const Separator = styled.div`
 	margin-right: 20px;
 `
 
-const SH3 = styled(H3)`
-	margin-top: 14px;
+const SH4 = styled(H4)`
+	margin-top: 5px;
 	color: #434850;
 	${Card}:hover & {
-		color: #E8A87C;
+		color: ${props => props.color};
 	}
 	transition: color .2s cubic-bezier(.4,0,.2,.1);
 `
 
-const SSubtitle = styled(Subtitle)`
-	margin-top: 7px;
+const SSubtitle = styled.p`
+	font-family: Mulish;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 15px;
+	color: #434850;
+	max-height: 45px;
+	margin-top: 1px;
 `
 
 const SSubtitleLink = styled(Subtitle)`
-	margin-top: 12px;
+	margin-top: 1px;
 	text-decoration: underline;
 	width: max-content;
 	text-align: start;
 	${Card}:hover & {
-		color: #E8A87C;
+		color: ${props => props.color};
 	}
 	transition: color .2s cubic-bezier(.4,0,.2,.1);
+	align-self: flex-end;
 `
 
 const NavLink = ({ href, children }) => {
@@ -160,11 +170,11 @@ const CCard = ({ color, post: {title, longTitle, description, coverImg} }) => {
 								Gorski Kotar: Kanjon Kamačnik
 							</DateLocation>
 						</DateLocationRow>
-							<SH3>{longTitle}</SH3>
-						<SSubtitle textAlign='start' color='dark'>
+						<SH4 color={color}>{longTitle}</SH4>
+						<SSubtitle textAlign='start'>
 								{description}
 						</SSubtitle>
-							<SSubtitleLink>Pročitaj više</SSubtitleLink>
+						<SSubtitleLink color={color}>Pročitaj više</SSubtitleLink>
 					</CardText>
 				</CardContent>
 			</Card>
@@ -172,4 +182,4 @@ const CCard = ({ color, post: {title, longTitle, description, coverImg} }) => {
 
 	)
 }
-export default RecommendedBlogs
+export default ExploreBlogs

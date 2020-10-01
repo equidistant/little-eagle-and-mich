@@ -1,17 +1,17 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { coverHomeImg } from '../images'
-import { H1, Subheading, BlogCategories, LatestBlogs, RandomGallery, RandomVideo, WhoAreWe, Newsletter } from '../components'
+import { H1, Subheading, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, WhoAreWe, Newsletter } from '../components'
 import useSWR, { mutate } from 'swr'
 import { paginate, useRandomGallery } from '../common'
 
 export async function getServerSideProps() {
-  const resTitles = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/titles`)
-  const titles = await resTitles.json()
-  const title = titles[Math.floor(Math.random() * Math.floor(titles.length))].title
+  const resGalleries = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/`)
+  const initialGalleries = await resGalleries.json()
 
-  const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${title}`)
-  const gallery = await resGallery.json()
+  // let index = Math.floor(Math.random() * Math.floor(galleries.length))
+  // const gallery = galleries[index]
+
 
   const resWeekendPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=weekend`)
   const weekendPosts = await resWeekendPost.json()
@@ -26,10 +26,8 @@ export async function getServerSideProps() {
 
   return { 
     props: { 
-      initialTitle: title, 
-      initialGallery: gallery,
-      initialPosts,
-      titles: titles
+      initialGalleries,
+      initialPosts
     }
   }
 }
@@ -42,10 +40,8 @@ const fetcher = async (url) => {
     return response.json()
 }
 
-const HomePage = ({ initialTitle, initialGallery, initialPosts, titles }) => {
-  const [title, longTitle, gallery, handleNext] = useRandomGallery({ titles })
-  // const { data: gallery, error } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/gallery/${title}`, fetcher, { initialData: initialGallery })
-  // let paginatedGallery = paginate({ images: JSON.parse(JSON.stringify(gallery.low)), nPerPage: 20 })
+const HomePage = ({ initialGalleries, initialPosts }) => {
+  const [gallery, handleNext] = useRandomGallery({ initialGalleries })
 	return (
     <Root>
         <Cover img={coverHomeImg}>
@@ -64,9 +60,9 @@ const HomePage = ({ initialTitle, initialGallery, initialPosts, titles }) => {
         <ContentRoot>
           <BlogCategories/>
           <LatestBlogs posts={initialPosts}/>
-          {gallery.low && <RandomGallery longTitle={longTitle} title={title} images={gallery.low} width={940} numOfRows={2} handleNext={handleNext} />} 
+          {gallery && gallery.low && <RandomGallery longTitle={gallery.longTitle} title={gallery.title} images={gallery.low} width={940} numOfRows={2} handleNext={handleNext} />} 
           <WhoAreWe/>
-          <RandomVideo/>
+          <YoutubeVideo title='Najnovija avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/8eBgcVkIFrs'/>
           <Newsletter/>
         </ContentRoot>
     </Root>

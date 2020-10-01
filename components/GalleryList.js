@@ -1,15 +1,14 @@
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { H2, H3, Subtitle, DateLocation } from './text'
-import BlogCategoryCard from './BlogCategoryCard.js.js'
 
-const AllBlogs = ({ title, color, posts }) => {
+const GalleryList = ({ title, color, galleries }) => {
 	return (
 		<Root>
 			<Center>
 				<SH2>{title}</SH2>
 				<Cards>
-					{posts.map((post, index) => <CCard post={post} color={color} key={index}/>)}
+					{galleries.map((gallery, index) => <CCard gallery={gallery} color={color} key={index}/>)}
 				</Cards>
 			</Center>
 		</Root>
@@ -28,7 +27,7 @@ const Center = styled.div`
 	width: min-content;
 	display: flex;
 	flex-direction: column;
-	margin-left: 80px;
+	width: 100%;
 `
 
 const SH2 = styled(H2)`
@@ -39,7 +38,7 @@ const Cards = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 40px;
-	width: 780px;
+	width: 100%;
 	flex-wrap: wrap;
 	justify-content: space-between;
 `
@@ -47,8 +46,8 @@ const Cards = styled.div`
 const Card = styled.div`
 	display: flex;
 	position: relative;
-	width: 382px;
-	height: 329px;
+	width: 300px;
+	height: 352px;
 	border-radius: 20px 2px;
 	cursor: pointer;
 	background: linear-gradient(0deg, rgba(44, 43, 41, 0.6), rgba(44, 43, 41, 0.6)), url(${props => props.src});
@@ -96,48 +95,24 @@ const CardText = styled.div`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-end;
 	padding-left: 32px;
 	padding-right: 50px;
-	padding-top: 115px;
-	padding-bottom: 70px;
+	padding-bottom: 32px;
 	z-index: 2;
 `
-
-const DateLocationRow = styled.div`
-	display: flex;
-	width: 100%;
-	justify-content: flex-start;
-	align-items: center;
-`
-
-const Separator = styled.div`
-	border-left: 1px solid #989DA3;
-	height: 80%;
-	margin-left: 20px;
-	margin-right: 20px;
-`
-
 
 const SH3 = styled(H3)`
 	margin-top: 15px;
 	color: #FFFCF9;
+	${Card}:hover & {
+		color: ${props => props.color};
+	}
 `
 
 const SSubtitle = styled(Subtitle)`
 	color: #FFFCF9;
 	margin-top: 7px;
-`
-
-const SSubtitleLink = styled(Subtitle)`
-	color: #FFFCF9;
-	margin-top: 10px;
-	text-decoration: underline;
-	width: 100%;
-	text-align: start;
-`
-
-const SDateLocation = styled(DateLocation)`
-	color: #FFFCF9;
 `
 
 const NavLink = ({ href, children }) => {
@@ -148,31 +123,15 @@ const NavLink = ({ href, children }) => {
 	)
   }
 
-const CCard = ({ color, post: {title, longTitle, description, coverImg} }) => {
+const CCard = ({ color, gallery: {title, longTitle, coverImg} }) => {
 	return (
 	<Card src={coverImg}>
 		<Overlay color={color}/>
 		<CardText>
-			<DateLocationRow>
-				<SDateLocation>
-					27.10.2019.
-				</SDateLocation>
-				<Separator />
-				<SDateLocation>
-					Gorski Kotar: Kanjon Kamačnik
-				</SDateLocation>
-			</DateLocationRow>
-				<SH3>{longTitle}</SH3>
-			<SSubtitle textAlign='start' color='dark'>
-					{description}
-			</SSubtitle>
-			<NavLink href={`/post/${title}`}>
-				<SSubtitleLink>Pročitaj više</SSubtitleLink>
-			</NavLink>
+			<SH3 color={color}>{longTitle}</SH3>
 		</CardText>
 	</Card>
 	)
 }
 
-{}
-export default AllBlogs
+export default GalleryList

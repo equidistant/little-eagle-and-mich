@@ -4,19 +4,13 @@ import JustifyGallery from './justify-gallery'
 import { randomImg, vector1Img } from '../images'
 import { Indie, H4 } from './text'
 
-const RandomGallery = ({ handleNext, title, longTitle, ...rest }) => {
+const GalleryPreview = ({ title, longTitle, color, ...rest }) => {
 	return (
 		<Root>
-			<Row>
-				<RandomImg src={randomImg} onClick={handleNext}/>
-				<Vector1Img src={vector1Img}/>
-				<IndiePressForRandom>pritisni za otkrivanje novih fotki</IndiePressForRandom>
-			</Row>
 			<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'}/>
 			<VisitGalleryRow>
-				<VisitGalleryButton href={`/gallery/${title}`} name={longTitle}/>
+				<VisitGalleryButton href={`/gallery/${title}`} name={longTitle} color={color} />
 			</VisitGalleryRow>
-			
 		</Root>
 	)
 }
@@ -60,7 +54,7 @@ const IndiePressForRandom = styled(Indie)`
 `
 
 const SLink = styled.a`
-	background: #E8A87C;
+	background: ${props => props.color};
 	border-radius: 20px 2px;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -84,10 +78,10 @@ const VisitGalleryRow = styled.div`
 	margin-bottom: 40px;
 `
 
-const VisitGalleryButton = ({ href, name }) => {
+const VisitGalleryButton = ({ href, name, color }) => {
   return (
     <Link href={href} passHref>
-		<SLink>
+		<SLink color={color}>
 			<SH4Dark>Posjeti Galeriju:</SH4Dark><SH4White>{name}</SH4White>
 		</SLink>
     </Link>
@@ -95,4 +89,4 @@ const VisitGalleryButton = ({ href, name }) => {
 }
 
 
-export default RandomGallery
+export default GalleryPreview

@@ -81,6 +81,7 @@ export const DateLocation = styled.p`
   font-size: 12px;
   line-height: 18px;
   color: #989DA3;
+  width: max-content;
 `
 
 export const Indie = styled.p`

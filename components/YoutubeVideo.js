@@ -2,15 +2,15 @@ import styled from 'styled-components'
 import { H2, H4 } from './text'
 import Link from 'next/link'
 
-const WhoAreWe = () => {
+const WhoAreWe = ({ title, src, href, buttonText }) => {
 	return (
 		<Root>
 			<Row>
-				<H2>Najnovija avantura</H2> 
+				<H2>{title}</H2> 
 			</Row>
-			<YoutubeVideo src="https://www.youtube.com/embed/videoseries?list=PLEAZSwHOGiyawYMbwdh-1hJoO6tJlXSnt" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen/>
+			<YoutubeVideo src={src} frameborder="0" allowfullscreen/>
 			<VisitArticleButtonRow>
-				<VisitArticleButton href={`/about`} name='Odi na članak'/>
+				<VisitArticleButton href={href} name={buttonText}/>
 			</VisitArticleButtonRow>
 		</Root>
 	)
@@ -51,10 +51,12 @@ const SLink = styled.a`
 
 const YoutubeVideo = styled.iframe`
 	margin-left: 80px;
+	width: 780px;
 	height: 460px;
 	margin-top: 30px;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	border-radius: 20px 2px;
+	border: none;
 `
 
 const VisitArticleButtonRow = styled.div`
