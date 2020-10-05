@@ -12,6 +12,18 @@ export const getColor = ({ tags, theme }) => {
 	}
 }
 
+export const getBgColor = ({ tags, theme }) => {
+	if (tags.includes('weekend')) {
+		return theme.color.lightOrange
+	}
+	if (tags.includes('local')) {
+		return theme.color.lightGreen
+	}
+	if (tags.includes('distant')) {
+		return theme.color.lightBlue
+	}
+}
+
 export const paginate = ({ images, nPerPage = 20 }) => {
     let paginatedImages = []
     while (images.length) {

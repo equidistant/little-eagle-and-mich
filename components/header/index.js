@@ -15,10 +15,10 @@ const Header = () => {
 				</IconLink>
 				<Links>
 					<NavLink href='/weekend' name='Vikend izleti'/>
-					<NavLink href='/' name='Lokalna putovanja'/>
-					<NavLink href='/' name='Daleka putovanja'/>
-					<NavLink href='/' name='Fotogalerija'/>
-					<NavLink href='/' name='O nama'/>
+					<NavLink href='/local' name='Lokalna putovanja'/>
+					<NavLink href='/distant' name='Daleka putovanja'/>
+					<NavLink href='/gallery' name='Fotogalerija'/>
+					<NavLink href='/about' name='O nama'/>
 					<Search />
 				</Links>
 			</Center>

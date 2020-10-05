@@ -1,7 +1,23 @@
 import { useRef, useCallback, useState, useEffect } from 'react'
 import debounce from 'lodash.debounce'
 import _ from 'lodash'
+import { getRandomInt } from './utils'
 
+export const useExplorePosts = ({ posts, title }) => {
+  const [explorePosts, setExplorePosts] = useState([])
+	useEffect(() => {
+    let currentPosts = []
+		for (let i = 0; i < 2; i++) {
+			let post = posts[getRandomInt(posts.length)]
+			while (post.title === title || (currentPosts.length === 1 && currentPosts[0].title === post.title)) {
+				post = posts[getRandomInt(posts.length)]
+			}
+			currentPosts.push(post)
+    }
+    setExplorePosts(currentPosts)
+  }, [])
+  return explorePosts
+}
 
 export const useRandomGallery = ({ initialGalleries }) => {
   const [nextTitle, setNextTitle] = useState(initialGalleries[Math.floor(Math.random() * Math.floor(initialGalleries.length))].title)
@@ -25,15 +41,15 @@ export const useRandomGallery = ({ initialGalleries }) => {
   return [gallery, handleNext]
 }
 
-export const useRows = ({ images, width, numOfRows, gap }) => {
+export const useRows = ({ images, width, numOfRows, targetWidth }) => {
   const [previousImages, setPreviousImages] = useState([])
   const [rows, setRows] = useState([])
   const appendRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, gap })
+    const newRows = getRows({ images, width, numOfRows, targetWidth })
     setRows([...rows, ...newRows])
   }, [rows])
   const resetRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, gap })
+    const newRows = getRows({ images, width, numOfRows, targetWidth })
     setRows([...newRows])
   }, [])
   useEffect(() => {
@@ -48,13 +64,13 @@ export const useRows = ({ images, width, numOfRows, gap }) => {
   return [rows, appendRows, resetRows]
 }
 
-const getRows = ({ images, width, numOfRows, gap }) => {
+const getRows = ({ images, width, numOfRows, targetWidth = 350 }) => {
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
   let maxWidth = window.innerWidth - scrollbarWidth - 1
   if (width) {
     maxWidth = width
   }
-  const minRatio = maxWidth / 260
+  const minRatio = maxWidth / targetWidth
   return buildRows({ images: images, maxWidth, minRatio, numOfRows })
 }
 

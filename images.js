@@ -7,6 +7,7 @@ export const coverHomeImg = `${URL}/cover/home.jpg`
 export const coverWeekendImg = `${URL}/cover/weekend.jpg`
 export const coverLocalImg = `${URL}/cover/local.jpg`
 export const coverDistantImg = `${URL}/cover/distant.jpg`
+export const coverGalleryImg = `${URL}/cover/gallery.jpg`
 
 export const anaImg = `${URL}/ana.png`
 export const michImg = `${URL}/mich.png`

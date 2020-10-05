@@ -4,14 +4,9 @@ import JustifyGallery from './justify-gallery'
 import { randomImg, vector1Img } from '../images'
 import { Indie, H4 } from './text'
 
-const GalleryPreview = ({ title, longTitle, color, bgColor, ...rest }) => {
+const Gallery = ({ title, longTitle, color, bgColor, ...rest }) => {
 	return (
-		<Root bgColor={bgColor}>
-			<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'}/>
-			<VisitGalleryRow>
-				<VisitGalleryButton href={`/gallery/${title}`} name={longTitle} color={color} />
-			</VisitGalleryRow>
-		</Root>
+		<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'}/>
 	)
 }
 
@@ -89,4 +84,4 @@ const VisitGalleryButton = ({ href, name, color }) => {
 }
 
 
-export default GalleryPreview
+export default Gallery

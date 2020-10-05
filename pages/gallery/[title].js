@@ -1,34 +1,27 @@
 import styled, { useTheme } from 'styled-components'
-import { Subheading, GalleryPreview, ExploreBlogs, Newsletter } from '../../components'
+import { Subheading, Gallery, ExploreBlogs, Newsletter } from '../../components'
 import { buildHtml, getColor, getBgColor } from '../../common'
 
 export async function getStaticPaths() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`)
-  const posts = await res.json()
-    const paths = posts.map((post) => ({
-      params: { title: post.title },
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`)
+  const galleries = await res.json()
+    const paths = galleries.map((gallery) => ({
+      params: { title: gallery.title },
   }))
 
   return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const resPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?title=${params.title}`)
-  const arrPost = await resPost.json()
-  const post = arrPost[0]
-
-  const resPosts = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`)
-  const posts = await resPosts.json()
-
-  const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?title=${post.gallery}`)
+  const resGallery = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?title=${params.title}`)
   const arrGallery = await resGallery.json()
-  const gallery = await arrGallery[0]
+  const gallery = arrGallery[0]
 
-  return { props: { post, gallery, posts } }
+  return { props: { gallery } }
 }
 
-export default function PostPage ({ post, gallery, posts }) {
-  const { longTitle, description, tags, created, coverImg, nodes} = post
+export default function SingleGalleryPage ({ gallery }) {
+  const { longTitle, description, tags, created, coverImg, nodes} = gallery
   const theme = useTheme()
   return (
     <Root>
@@ -37,17 +30,13 @@ export default function PostPage ({ post, gallery, posts }) {
         <Title>{longTitle}</Title>
         <SSubheading>{description}</SSubheading>
         <Content>
-          {buildHtml(nodes)}
+          <Gallery images={gallery.low} width={940}/>
         </Content>
       </ContentRoot>
-      <GalleryPreview title={gallery.title} longTitle={gallery.longTitle} color={getColor({ tags, theme })} bgColor={getBgColor({ tags, theme })} images={gallery.low} width={940} numOfRows={2}/>
-      <ExploreBlogs posts={posts} />
-      <Newsletter color={getColor({ tags, theme})} bgColor={getBgColor({ tags, theme })}/>
     </Root>
   )
 }
 
-{/*  */}
 
 const Root = styled.div`
   width: 100%;

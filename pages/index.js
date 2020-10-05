@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { coverHomeImg } from '../images'
 import { H1, Subheading, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, WhoAreWe, Newsletter } from '../components'
 import useSWR, { mutate } from 'swr'
@@ -41,6 +41,7 @@ const fetcher = async (url) => {
 }
 
 const HomePage = ({ initialGalleries, initialPosts }) => {
+  const theme = useTheme()
   const [gallery, handleNext] = useRandomGallery({ initialGalleries })
 	return (
     <Root>
@@ -63,7 +64,7 @@ const HomePage = ({ initialGalleries, initialPosts }) => {
           {gallery && gallery.low && <RandomGallery longTitle={gallery.longTitle} title={gallery.title} images={gallery.low} width={940} numOfRows={2} handleNext={handleNext} />} 
           <WhoAreWe/>
           <YoutubeVideo title='Najnovija avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/8eBgcVkIFrs'/>
-          <Newsletter/>
+          <Newsletter color={theme.color.orange} bgColor={theme.color.lightOrange}/>
         </ContentRoot>
     </Root>
   )

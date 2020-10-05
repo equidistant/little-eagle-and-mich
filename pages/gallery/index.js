@@ -1,28 +1,30 @@
 import { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { coverWeekendImg } from '../images'
-import { H1, Subheading,  RecommendedBlogs, AllBlogs, GalleryList, YoutubeVideo, Newsletter } from '../components'
+import { coverGalleryImg } from '../../images'
+import { H1, Subheading,  RecommendedBlogs, AllBlogs, GalleryList, YoutubeVideo, Newsletter, LatestGalleries } from '../../components'
 import useSWR, { mutate } from 'swr'
-import { paginate, useRandomGallery, getRandomInt } from '../common'
+import { paginate, useRandomGallery, getRandomInt } from '../../common'
 
 export async function getServerSideProps() {
-  const resWeekendPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=weekend`)
-  const weekendPosts = await resWeekendPost.json()
+  const resGalleries = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`)
+  const galleries = await resGalleries.json()
 
-  const resWeekendGalleries = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?tags=weekend`)
-  const weekendGalleries = await resWeekendGalleries.json()
- 
-  let index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
-  while (index[0] === index[1]) {
-    index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
-  }
-  const recommendedPosts = [weekendPosts[index[0]], weekendPosts[index[1]]]
-  
+  const resWeekend = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?tags=weekend`)
+  const weekend = await resWeekend.json()
+
+  const resLocal = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?tags=local`)
+  const local = await resLocal.json()
+
+  const resDistant = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery?tags=distant`)
+  const distant = await resDistant.json()
+
+  const latest = galleries.slice(0, 2)
   return {
     props: {
-      recommendedPosts,
-      posts: weekendPosts,
-      galleries: weekendGalleries
+      latest,
+      weekend,
+      local,
+      distant
     }
   }
 }
@@ -35,29 +37,25 @@ const fetcher = async (url) => {
     return response.json()
 }
 
-const HomePage = ({ posts, recommendedPosts, galleries }) => {
+const GalleryPage = ({ latest, weekend, local, distant }) => {
   const theme = useTheme()
 	return (
     <Root>
-        <Cover img={coverWeekendImg}>
+        <Cover img={coverGalleryImg}>
           <HeadersRoot>
             <HeadersCenter>
-              <H1>Vikend izleti</H1>
+              <H1>Galerija Fotografija</H1>
                 <PSubheading>
-                  Savjeti i ideje oko vikend izleta u Hrvatskoj i okolici, gdje i kako kampirati, što posjetiti
+                  Za one kojima su fotke sasvim dovoljne
                 </PSubheading>
-              <SubheadingButton>
-                Kreni istraživati!
-              </SubheadingButton>
             </HeadersCenter>
           </HeadersRoot>
         </Cover>
         <ContentRoot>
-          <RecommendedBlogs posts={recommendedPosts} color='orange'/>
-          <AllBlogs title={'Vikend putopisi'} posts={posts} color='orange'/>
-          <GalleryList title={'Foto galerija'} galleries={galleries} color={theme.color.orange}/>
-          <YoutubeVideo title='Najnovija vikend avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/8eBgcVkIFrs'/>
-          <Newsletter color={theme.color.orange} bgColor={theme.color.lightOrange}/>
+          <LatestGalleries galleries={latest} title='Najnoviji foto albumi'/>
+          <GalleryList title={'Vikend fotografije'} galleries={weekend} color={theme.color.orange}/>
+          <GalleryList title={'Lokalni foto albumi'} galleries={local} color={theme.color.green}/>
+          <GalleryList title={'Fotografije iz daleka'} galleries={distant} color={theme.color.blue}/>
         </ContentRoot>
     </Root>
   )
@@ -130,4 +128,4 @@ const ContentRoot = styled.div`
   justify-content: center;
 `
 
-export default HomePage
+export default GalleryPage

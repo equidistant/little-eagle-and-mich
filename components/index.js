@@ -13,6 +13,8 @@ import AllBlogs from './AllBlogs'
 import GalleryList from './GalleryList'
 import GalleryPreview from './GalleryPreview'
 import ExploreBlogs from './ExploreBlogs'
+import LatestGalleries from './LatestGalleries'
+import Gallery from './Gallery'
 
 export * from './text'
-export { Header, Footer, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, JustifyGallery, WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs }
+export { Header, Footer, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, JustifyGallery, WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs, LatestGalleries, Gallery }
