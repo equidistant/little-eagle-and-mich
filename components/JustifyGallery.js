@@ -9,7 +9,7 @@ const JustifyScrollGallery = ({ images, open, width, numOfRows, marginTop }) => 
   const [rows, galleryRef] = useRowsScroll({ images, width, numOfRows })
   return (
     <JustifiedGalleryContainer marginTop={marginTop} ref={galleryRef}>
-        {renderRows({ rows, open })}
+        {renderRowsLazy({ rows, open })}
     </JustifiedGalleryContainer>
   )
 }
@@ -18,12 +18,28 @@ const JustifyGallery = ({ images, width, numOfRows, marginTop }) => {
   const [rows] = useRows({ images, width, numOfRows })
   return (
     <JustifiedGalleryContainer marginTop={marginTop} >
-        {renderRows({ rows, open })}
+        {renderRows({ rows })}
     </JustifiedGalleryContainer>
   )
 }
 
-const renderRows = ({ rows, open }) => {
+const renderRows = ({ rows }) => {
+  return rows.map((row, index) => {
+    return (
+      <Row key={index}>
+        {
+          row.images.map(({ width, height, url, id}) => {
+            return (
+              <Image url={url} height={height} width={width} key={url} />
+            )
+          })
+        }
+      </Row>
+    )
+  })
+}
+
+const renderRowsLazy = ({ rows, open }) => {
   return rows.map((row, index) => {
     return (
       <Row key={index}>
