@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Subheading, Gallery, ExploreBlogs, Newsletter } from '../../components'
-import { buildHtml, getColor, getBgColor } from '../../common'
+import { Subheading, JustifyScrollGallery, SwipeGallery, ExploreBlogs, Newsletter, LittleEaglePhoto } from '../../components'
+import { buildHtml, getColor, getBgColor, paginate } from '../../common'
+import { useRouter } from 'next/router'
 
 export async function getStaticPaths() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery`)
@@ -21,8 +23,21 @@ export async function getStaticProps({ params }) {
 }
 
 export default function SingleGalleryPage ({ gallery }) {
-  const { longTitle, description, tags, created, coverImg, nodes} = gallery
+  const { title, longTitle, description, tags, created, coverImg, nodes} = gallery
   const theme = useTheme()
+  const router = useRouter()
+  const [activeImg, setActiveImg] = useState(router.query.activeImg ? parseInt(router.query.activeImg) : -1)
+  const open = (id) => {
+    const href = `/gallery/${router.query.title}?activeImg=${id}`
+    window.history.replaceState( {}, '', href )
+    setActiveImg(id)
+  }
+  const close = () => {
+    const href = `/gallery/${router.query.title}`
+    window.history.replaceState( {}, '', href )
+    setActiveImg(-1)  
+  }
+  const paginatedImages = paginate({ images: JSON.parse(JSON.stringify(gallery.low)) })
   return (
     <Root>
 		  <Cover img={coverImg}/>
@@ -30,9 +45,11 @@ export default function SingleGalleryPage ({ gallery }) {
         <Title>{longTitle}</Title>
         <SSubheading>{description}</SSubheading>
         <Content>
-          <Gallery images={gallery.low} width={940}/>
+          <JustifyScrollGallery images={paginatedImages} width={940} open={open} />
+          {activeImg !== -1 && <SwipeGallery images={gallery.high} activeImg={activeImg} close={close} setActiveImg={setActiveImg} />}
         </Content>
       </ContentRoot>
+      <LittleEaglePhoto />
     </Root>
   )
 }
@@ -40,7 +57,6 @@ export default function SingleGalleryPage ({ gallery }) {
 
 const Root = styled.div`
   width: 100%;
-  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,7 +77,7 @@ const Cover = styled.div`
 `
 
 const ContentRoot = styled.div`
-  width: 940px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

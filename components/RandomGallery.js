@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Link from 'next/link'
-import JustifyGallery from './justify-gallery'
+import { JustifyGallery } from './JustifyGallery'
 import { randomImg, vector1Img } from '../images'
 import { Indie, H4 } from './text'
 

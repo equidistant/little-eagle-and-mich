@@ -1,9 +1,7 @@
 import styled, { css } from 'styled-components'
-import { logoTextImg } from '../../images'
-import IconLink from './IconLink'
-import NavLink from './NavLink'
-import Search from './Search'
-import { useScrolledDirection } from '../../common'
+import { logoTextImg, searchImg } from '../images'
+import { useScrolledDirection } from '../common'
+import Link from 'next/link'
 
 const Header = () => {
 	const [scrollY, scrolled] = useScrolledDirection({ boundary: 0 })
@@ -71,6 +69,84 @@ const Links = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	width: 70%;
+`
+
+const SLink = styled.a`
+	text-decoration: none;
+	font-family: 'Mulish';
+	font-style: normal;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 15px;
+	text-transform: uppercase;
+	color: #FFFFFF;
+`
+
+const IconLink = ({ href, children }) => {
+	return (
+	  <Link href={href} passHref>
+		<SLink>
+			{children}
+		</SLink>
+	  </Link>
+	)
+  }
+
+
+const NavLink = ({ href, name }) => {
+  return (
+    <Link href={href} passHref>
+      <SLink>{name}</SLink>
+    </Link>
+  )
+}
+
+const Search = () => {
+	return (
+		<SearchRoot>
+			<SearchInput placeholder={'TRAŽI...'}/>
+			<SearchIconWrapper>
+				<SearchIcon src={searchImg} />
+			</SearchIconWrapper>
+		</SearchRoot>
+	)
+}
+
+const SearchRoot = styled.div`
+	display: flex;
+	width: 110px;
+	height: 30px;
+	background: #FFFFFF;
+	border-radius: 30px;
+`
+
+const SearchIconWrapper = styled.div`
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-right: 6px;
+
+`
+
+const SearchIcon = styled.img`
+	width: 16px;
+	height: 16px;
+`
+
+const SearchInput = styled.input`
+	width: 80px;
+	border-radius: 30px;
+	border: none;
+	padding-left: 20px;
+	font-family: 'Mulish';
+	font-style: normal;
+	font-size: 12px;
+	line-height: 15px;
+
+	/* identical to box height */
+	text-transform: uppercase;
+
+	/* Secondary grey */
+	color: #989DA3;
 `
 
 export default Header

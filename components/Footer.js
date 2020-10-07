@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { H2, H4, Body, Indie, Subheading } from '../text'
+import { H2, H4, Body, Indie, Subheading } from './text'
 import Link from 'next/link'
-import { vector3WhiteImg, vector4Img, copyrightImg, githubImg, instagramImg, youtubeImg } from '../../images'
+import { vector3WhiteImg, vector4Img, copyrightImg, githubImg, instagramImg, youtubeImg } from '../images'
 
 const Footer = () => {
 	return (

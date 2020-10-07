@@ -5,8 +5,6 @@ import { getColor } from '../common'
 
 const LatestGalleries = ({ title, galleries }) => {
 	const theme = useTheme()
-	console.log(getColor({ tags: galleries[0].tags, theme }))
-	console.log(getColor({ tags: galleries[0].tags, theme }))
 	return (
 		<Root>
 			<Center>

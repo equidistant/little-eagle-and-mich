@@ -19,10 +19,13 @@ export const vector2Img = `/images/vector-2.png`
 export const vector3Img = `/images/vector-3.png`
 export const vector3WhiteImg = `/images/vector-3-white.png`
 export const vector4Img = `/images/vector-4.png`
+export const vector5Img = `/images/vector-5.png`
+export const vector6Img = `/images/vector-6.png`
 
 export const copyrightImg = `/images/copyright.png`
 export const githubImg = `/images/github.png`
 export const instagramImg = `/images/instagram.png`
 export const youtubeImg = `/images/youtube.png`
 export const searchImg = `/images/search.png`
+export const leLogoImg = '/images/le-logo.png'
 

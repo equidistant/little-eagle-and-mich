@@ -57,21 +57,76 @@ export const useRows = ({ images, width, numOfRows, targetWidth }) => {
       appendRows({ images })
     }
     if (previousImages !== images) {
-      setPreviousImages(images)
       resetRows({ images })
+      setPreviousImages(images)
+    }
+  }, [images, rows.length, appendRows])
+  return [rows, appendRows, resetRows]
+}
+export const useRowsLazy = ({ images, width, numOfRows, targetWidth }) => {
+  const [previousImages, setPreviousImages] = useState([])
+  const [rows, setRows] = useState([])
+  const appendRows = useCallback(({ images }) => {
+    const newRows = getRows({ images, width, numOfRows, targetWidth })
+    setRows([...rows, ...newRows])
+  }, [rows])
+  const resetRows = useCallback(({ images }) => {
+    const newRows = getRows({ images, width, numOfRows, targetWidth })
+    setRows([...newRows])
+  }, [])
+  useEffect(() => {
+    if (rows.length === 0) {
+      appendRows({ images })
     }
   }, [images, rows.length, appendRows])
   return [rows, appendRows, resetRows]
 }
 
-const getRows = ({ images, width, numOfRows, targetWidth = 350 }) => {
+export const useRowsScroll = ({ images, width }) => {
+  const page = useRef(0)
+  const galleryRef = useRef(null)
+  const [rows, appendRows, resetRows] = useRowsLazy({ images: images[page.current], width })
+  useEffect(() => {
+    if (galleryRef.current.clientHeight < window.innerHeight) {
+      if (rows.length > 0) {
+        page.current += 1
+      }
+      appendRows({ images: images[page.current]})
+    }
+    const scrollListener = (e) => {
+      if (window.innerHeight + window.scrollY >= (0.9 * galleryRef.current.clientHeight)) {
+        if (page.current < images.length - 1) {
+          if (rows.length > 0) {
+            page.current += 1
+          }
+          appendRows({ images: images[page.current]})
+        }
+      }
+    }
+    const resizeListener = debounce(() => {
+      const imagesSlice = images.slice(0, page.current + 1)
+      const pageImages = [].concat.apply([], imagesSlice)
+      resetRows({ images: pageImages })
+    }, 100)
+    window.addEventListener('resize', resizeListener)
+    window.addEventListener('scroll', scrollListener)
+    return () => {
+      window.removeEventListener('resize', resizeListener)
+      window.removeEventListener('scroll', scrollListener)
+    }
+  }, [appendRows, resetRows, images, rows])
+  return [rows, galleryRef]
+}
+
+
+const getRows = ({ images, width, numOfRows, targetWidth = 550 }) => {
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
   let maxWidth = window.innerWidth - scrollbarWidth - 1
   if (width) {
     maxWidth = width
   }
   const minRatio = maxWidth / targetWidth
-  return buildRows({ images: images, maxWidth, minRatio, numOfRows })
+  return buildRows({ images, maxWidth, minRatio, numOfRows })
 }
 
 const buildRows = ({ images, maxWidth, minRatio, numOfRows }) => {
@@ -124,43 +179,6 @@ const buildRows = ({ images, maxWidth, minRatio, numOfRows }) => {
   return rowsSizes
 }
 
-export const useScrollLoad = ({ images }) => {
-  const page = useRef(0)
-  const galleryRef = useRef(null)
-  const [rows, appendRows, resetRows] = useRows({ images: images[page.current] })
-  useEffect(() => {
-    if (galleryRef.current.clientHeight < window.innerHeight) {
-      if (rows.length > 0) {
-        page.current += 1
-      }
-      appendRows({ images: images[page.current]})
-    }
-    const scrollListener = (e) => {
-      if (window.innerHeight + window.scrollY >= (0.9 * galleryRef.current.clientHeight)) {
-        if (page.current < images.length - 1) {
-          if (rows.length > 0) {
-            page.current += 1
-          }
-          appendRows({ images: images[page.current]})
-        }
-      }
-    }
-    const resizeListener = debounce(() => {
-      const imagesSlice = images.slice(0, page.current + 1)
-      const pageImages = [].concat.apply([], imagesSlice)
-      resetRows({ images: pageImages })
-    }, 100)
-    window.addEventListener('resize', resizeListener)
-    window.addEventListener('scroll', scrollListener)
-    return () => {
-      window.removeEventListener('resize', resizeListener)
-      window.removeEventListener('scroll', scrollListener)
-    }
-  }, [appendRows, resetRows, images, rows])
-  return [rows, galleryRef]
-}
-
-
 export const useScrolledDirection = function ({ boundary }) {
   const [scrollY, setScrollY] = useState(0)
   const [scrolled, setScrolled] = useState(false)
@@ -186,4 +204,185 @@ const checkScrolled = ({ boundary, scrollY }) => {
   }
 }
 
+export const useSwipeImages = ({ images }) => {
+  const [swipeImages, setSwipeImages] = useState([])
+  useEffect(() => {
+    setSwipeImages(buildSwipeImages(images))
+    const resizeListener = debounce(() => {
+      setSwipeImages(buildSwipeImages(images))
+    }, 100)
+    window.addEventListener('resize', resizeListener)
+    return () => window.removeEventListener('resize', resizeListener)
+  }, [images])
+  return [swipeImages]
+}
 
+const buildSwipeImages = images => {
+  const windowHeight = window.innerHeight - 20
+  const windowWidth = document.body.clientWidth
+  return images.map(({ url, ratio }) => {
+    if (ratio < 1) {
+      let height = windowHeight - windowHeight * 0.1
+      let width = height * ratio
+      while (height > windowHeight || width > windowWidth) {
+        height = height * 0.99
+        width = height * ratio
+      }
+      return {
+        url,
+        width: height * ratio,
+        height: height,
+        marginX: (windowWidth - width) / 2,
+        marginY: (windowHeight - height) / 2,
+      }
+    }
+    else {
+      let height = windowHeight - windowHeight * 0.1
+      let width = height * ratio
+      while (height > windowHeight || width > windowWidth) {
+        height = height * 0.99
+        width = height * ratio
+      }
+      return {
+        url,
+        width,
+        height,
+        marginX: (windowWidth - width) / 2,
+        marginY: (windowHeight - height) / 2,
+      }
+    }
+  })
+}
+
+
+export const useMouseTouchSwipe = function ({ activeImg, length, changeUrl }) {
+  const [w, setW] = useState(0)
+  const locked = useRef(false)
+  const i = useRef(activeImg)
+  const n = useRef(length)
+
+  const C = useRef(null)
+  const rID = useRef(null)
+
+  const x0 = useRef(0)
+  const ini = useRef(0)
+  const anf = useRef(0)
+  const fin = useRef(0)
+
+  const cf = useRef(0)
+
+  const N = length
+  const NF = 30
+  const TFN = {
+  	'ease-in-out': (k) => .5*(Math.sin((k - .5)*Math.PI) + 1)
+  }
+
+  const next = () => {
+    if (i.current + 1 < N) {
+      anf.current = 24
+      fin.current = fin.current + 1
+      i.current = i.current + 1
+      ani()
+    }
+  }
+
+  const previous = () => {
+      if (i.current >= 1) {
+        anf.current = 24
+        fin.current = fin.current - 1
+        i.current = i.current - 1
+        ani()
+      }
+    }
+
+  const unify = (e) => e.changedTouches ? e.changedTouches[0] : e
+
+  const ani = () => {
+    const newI = ini.current + (fin.current - ini.current) * TFN['ease-in-out'](cf.current / anf.current)
+    if (newI) {
+      C.current.style.setProperty('--i', newI)
+    }
+    if (cf.current === anf.current) {
+      if (newI) {
+        changeUrl(newI)
+      }
+      stopAni()
+      return
+    }
+
+    cf.current = cf.current + 1
+    rID.current = requestAnimationFrame(ani)
+  }
+
+  const stopAni = () => {
+    cf.current = 0
+    cancelAnimationFrame(rID.current)
+    rID.current = null
+  }
+
+  const lock = (e) => {
+    x0.current = unify(e).clientX
+    locked.current = true
+  }
+
+  const drag = (e) => {
+    e.preventDefault()
+
+    if (locked.current) {
+      let dx = unify(e).clientX - x0.current
+      let f = +(dx/w).toFixed(2)
+      C.current.style.setProperty('--i', i.current - f)
+    }
+  }
+
+  const move = (e) => {
+    if (locked.current) {
+      let dx = unify(e).clientX - x0.current
+      let s = Math.sign(dx)
+      let f = +(s * dx / w).toFixed(2)
+
+      ini.current = i.current - s * f
+
+      if ((i.current > 0 || s < 0) && (i.current < N - 1 || s > 0) && f > .2) {
+        i.current = i.current - s
+        f = 1 - f
+      }
+
+      fin.current = i.current
+      anf.current = Math.round(f * NF)
+      n.current = 2 + Math.round(f)
+
+      ani()
+      x0.current = null
+      locked.current = false
+    }
+  }
+
+  const resize = () => {
+    setW(document.body.clientWidth)
+  }
+
+  useEffect(() => {
+    setW(window.innerWidth)
+    C.current = document.querySelector('#swipeCarousel')
+    C.current.style.setProperty('--n', N)
+    C.current.style.setProperty('--i', i.current)
+    window.addEventListener('mousedown', lock)
+    window.addEventListener('touchstart', lock)
+    window.addEventListener('mousemove', drag)
+    window.addEventListener('touchmove', drag)
+    window.addEventListener('mouseup', move)
+    window.addEventListener('touchend', move)
+    window.addEventListener('resize', resize)
+    return () => {
+      window.removeEventListener('mousedown', lock)
+      window.removeEventListener('mousemove', drag)
+      window.removeEventListener('mouseup', move)
+      window.removeEventListener('touchstart', lock)
+      window.removeEventListener('touchmove', drag)
+      window.removeEventListener('touchend', move)
+      window.removeEventListener('resize', resize)
+    }
+  })
+  return [previous, next]
+}

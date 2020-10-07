@@ -1,10 +1,11 @@
-import Header from './header'
-import Footer from './footer'
+import Header from './Header'
+import Footer from './Footer'
 import BlogCategories from './BlogCategories'
 import LatestBlogs from './LatestBlogs'
 import RandomGallery from './RandomGallery'
 import YoutubeVideo from './YoutubeVideo'
-import JustifyGallery from './justify-gallery'
+import { JustifyGallery, JustifyScrollGallery } from './JustifyGallery'
+import SwipeGallery from './SwipeGallery'
 import WhoAreWe from './WhoAreWe'
 import Newsletter from './Newsletter'
 
@@ -14,7 +15,8 @@ import GalleryList from './GalleryList'
 import GalleryPreview from './GalleryPreview'
 import ExploreBlogs from './ExploreBlogs'
 import LatestGalleries from './LatestGalleries'
-import Gallery from './Gallery'
+import LittleEaglePhoto from './LittleEaglePhoto'
 
 export * from './text'
-export { Header, Footer, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, JustifyGallery, WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs, LatestGalleries, Gallery }
+export { Header, Footer, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, JustifyGallery, JustifyScrollGallery, SwipeGallery, 
+	WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs, LatestGalleries, LittleEaglePhoto }

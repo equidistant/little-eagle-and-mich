@@ -1,5 +1,57 @@
 import React, { useEffect, useRef, memo } from 'react'
 import styled, { css } from 'styled-components'
+import { useRouter } from 'next/router'
+
+import { useRows, useRowsScroll, paginate } from '../common'
+
+const JustifyScrollGallery = ({ images, open, width, numOfRows, marginTop }) => {
+  const router = useRouter()
+  const [rows, galleryRef] = useRowsScroll({ images, width, numOfRows })
+  return (
+    <JustifiedGalleryContainer marginTop={marginTop} ref={galleryRef}>
+        {renderRows({ rows, open })}
+    </JustifiedGalleryContainer>
+  )
+}
+
+const JustifyGallery = ({ images, width, numOfRows, marginTop }) => {
+  const [rows] = useRows({ images, width, numOfRows })
+  return (
+    <JustifiedGalleryContainer marginTop={marginTop} >
+        {renderRows({ rows, open })}
+    </JustifiedGalleryContainer>
+  )
+}
+
+const renderRows = ({ rows, open }) => {
+  return rows.map((row, index) => {
+    return (
+      <Row key={index}>
+        {
+          row.images.map(({ width, height, url, id}) => {
+            return (
+              <Image url={url} height={height} width={width} key={url} handleClick={() => open(id)} />
+            )
+          })
+        }
+      </Row>
+    )
+  })
+}
+
+const JustifiedGalleryContainer = styled.div`
+   margin-top: ${props => props.marginTop || 0};
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+`
+
+const Row = styled.div`
+  display: flex;
+  height: min-content;
+  width: min-content;
+`
 
 const Image = memo(({ url, height, width, handleClick, gap }) => {
   const imageRef = useRef(null)
@@ -47,3 +99,7 @@ const Img = styled.img`
 `
 
 export default Image
+
+
+
+export { JustifyGallery, JustifyScrollGallery }
