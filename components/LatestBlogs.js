@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 import { H3, H2, Subtitle, DateLocation } from './text'
 import { useState } from 'react'
+import Link from 'next/link'
 
 const useHover = () => {
 	const [index, setIndex] = useState(0)
@@ -18,37 +19,44 @@ const LatestBlogs = ({ posts }) => {
 				<SH2>Najnoviji putopisi</SH2>
 				<Row>
 					<Cards>
-						<OrangeCard onMouseEnter={() => handleMouseEnter(0)}>
-							<TextCardBackground color='orange'/>
-							<TextCardContent>
-								<DateLocation>15.02.2020 | Lokacija</DateLocation>
-								<SH3 active={index === 0} color='orange'>{posts[0].longTitle}</SH3>
-								<Subtitle textAlign='start'>
-								{posts[0].description}
-								</Subtitle>
-							</TextCardContent>
-						</OrangeCard>
-						<GreenCard onMouseEnter={() => handleMouseEnter(1)}>
-							<TextCardBackground color='green'/>
-							<TextCardContent>
-								<DateLocation>15.02.2020 | Lokacija</DateLocation>
-								<SH3 active={index === 1} color='green'>{posts[1].longTitle}</SH3>
-								<Subtitle textAlign='start'>
-								{posts[1].description}
-								</Subtitle>
-							</TextCardContent>
-						</GreenCard>
-						<BlueCard onMouseEnter={() => handleMouseEnter(2)}>
-							<TextCardBackground color='blue'/>
-							<TextCardContent>
-								<DateLocation>15.02.2020 | Lokacija</DateLocation>
-								<SH3 active={index === 2} color='blue'>{posts[2].longTitle}</SH3>
-								<Subtitle textAlign='start'>
-								{posts[2].description}
-								</Subtitle>
-							</TextCardContent>
-						</BlueCard>
+						<NavLink href={`/post/${posts[0].title}`}>
+							<OrangeCard onMouseEnter={() => handleMouseEnter(0)}>
+								<TextCardBackground color='orange'/>
+								<TextCardContent>
+									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+									<SH3 active={index === 0} color='orange'>{posts[0].longTitle}</SH3>
+									<Subtitle textAlign='start'>
+									{posts[0].description}
+									</Subtitle>
+								</TextCardContent>
+							</OrangeCard>
+						</NavLink>
+						<NavLink href={`/post/${posts[1].title}`}>
+							<GreenCard onMouseEnter={() => handleMouseEnter(1)}>
+								<TextCardBackground color='green'/>
+								<TextCardContent>
+									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+									<SH3 active={index === 1} color='green'>{posts[1].longTitle}</SH3>
+									<Subtitle textAlign='start'>
+									{posts[1].description}
+									</Subtitle>
+								</TextCardContent>
+							</GreenCard>
+						</NavLink>
+						<NavLink href={`/post/${posts[2].title}`}>
+							<BlueCard onMouseEnter={() => handleMouseEnter(2)}>
+								<TextCardBackground color='blue'/>
+								<TextCardContent>
+									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+									<SH3 active={index === 2} color='blue'>{posts[2].longTitle}</SH3>
+									<Subtitle textAlign='start'>
+									{posts[2].description}
+									</Subtitle>
+								</TextCardContent>
+							</BlueCard>
+						</NavLink>
 					</Cards>
+				
 					<ImageRoot>
 						<Image src={posts[0].coverImg} active={index === 0}/>
 						<Image src={posts[1].coverImg} active={index === 1}/>
@@ -180,6 +188,14 @@ const Image = styled.img`
 		opacity: 1;
 	`}
 `
+
+const NavLink = ({ href, children }) => {
+	return (
+	  <Link href={href} passHref>
+		{children}
+	  </Link>
+	)
+  }
 
 
 export default LatestBlogs

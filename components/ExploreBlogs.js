@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import styled, { css, useTheme } from 'styled-components'
 import { H2, H4, Subtitle, DateLocation } from './text'
-import BlogCategoryCard from './BlogCategoryCard.js.js'
 import { getRandomInt, getColor, useExplorePosts } from '../common'
 
 const ExploreBlogs = ({ posts, title }) => {

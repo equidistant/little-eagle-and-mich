@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { H2, H3, Subtitle, DateLocation } from './text'
-import BlogCategoryCard from './BlogCategoryCard.js.js'
 
 const RecommendedBlogs = ({ color, posts }) => {
 

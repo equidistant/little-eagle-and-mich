@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Subheading, JustifyScrollGallery, SwipeGallery, ExploreBlogs, Newsletter, LittleEaglePhoto } from '../../components'
 import { buildHtml, getColor, getBgColor, paginate } from '../../common'
@@ -26,7 +26,12 @@ export default function SingleGalleryPage ({ gallery }) {
   const { title, longTitle, description, tags, created, coverImg, nodes} = gallery
   const theme = useTheme()
   const router = useRouter()
-  const [activeImg, setActiveImg] = useState(router.query.activeImg ? parseInt(router.query.activeImg) : -1)
+  const [activeImg, setActiveImg] = useState(-1)
+  useEffect(() => {
+    if (router.query.activeImg && router.query.activeImg !== -1) {
+      setActiveImg(parseInt(router.query.activeImg))
+    }
+  }, [router.query.activeImg])
   const open = (id) => {
     const href = `/gallery/${router.query.title}?activeImg=${id}`
     window.history.replaceState( {}, '', href )

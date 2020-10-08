@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { JustifyGallery } from './JustifyGallery'
 import { randomImg, vector1Img } from '../images'
 import { Indie, H4 } from './text'
 
 const RandomGallery = ({ handleNext, title, longTitle, ...rest }) => {
+	const router = useRouter()
+	const open = (id) => {
+		router.push(`/gallery/${title}?activeImg=${id}`)
+	  }
 	return (
 		<Root>
 			<Row>
@@ -12,7 +17,7 @@ const RandomGallery = ({ handleNext, title, longTitle, ...rest }) => {
 				<Vector1Img src={vector1Img}/>
 				<IndiePressForRandom>pritisni za otkrivanje novih fotki</IndiePressForRandom>
 			</Row>
-			<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'}/>
+			<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'} title={title} open={open}/>
 			<VisitGalleryRow>
 				<VisitGalleryButton href={`/gallery/${title}`} name={longTitle}/>
 			</VisitGalleryRow>

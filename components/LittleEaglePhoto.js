@@ -1,11 +1,9 @@
 import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { H2, H3, Body, Subtitle, DateLocation,  Indie} from './text'
-import BlogCategoryCard from './BlogCategoryCard.js.js'
 import { leLogoImg, vector5Img } from '../images'
 
 const LittleEaglePhoto = ({ color, posts }) => {
-
 	return (
 		<Root>
 			<Center>

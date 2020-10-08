@@ -14,23 +14,23 @@ const JustifyScrollGallery = ({ images, open, width, numOfRows, marginTop }) => 
   )
 }
 
-const JustifyGallery = ({ images, width, numOfRows, marginTop }) => {
+const JustifyGallery = ({ images, width, numOfRows, marginTop, open }) => {
   const [rows] = useRows({ images, width, numOfRows })
   return (
     <JustifiedGalleryContainer marginTop={marginTop} >
-        {renderRows({ rows })}
+        {renderRows({ rows, open })}
     </JustifiedGalleryContainer>
   )
 }
 
-const renderRows = ({ rows }) => {
+const renderRows = ({ rows, open, }) => {
   return rows.map((row, index) => {
     return (
       <Row key={index}>
         {
           row.images.map(({ width, height, url, id}) => {
             return (
-              <Image url={url} height={height} width={width} key={url} />
+              <Image url={url} height={height} width={width} key={url} handleClick={() => open(id)}/>
             )
           })
         }
