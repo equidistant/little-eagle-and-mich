@@ -22,15 +22,25 @@ const Root = styled.div`
 	align-items: space-between;
 	justify-content: center;
 	width: 940px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const Row = styled.div`
-	width: 100%;
+	width: calc(100% - 80px);
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	margin-top: 175px;
 	margin-left: 80px;
+	@media only screen and (max-width: 1079px) {
+		margin-left: 0px;
+		margin-top: 130px;
+	}
 `
 
 const SLink = styled.a`
@@ -52,11 +62,21 @@ const SLink = styled.a`
 const YoutubeVideo = styled.iframe`
 	margin-left: 80px;
 	width: 780px;
-	height: 460px;
+	height: 440px;
 	margin-top: 30px;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	border-radius: 20px 2px;
 	border: none;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+		height: 290px;
+		margin-left: 0px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+		height: 160px;
+		margin-left: 0px;
+	}
 `
 
 const VisitArticleButtonRow = styled.div`

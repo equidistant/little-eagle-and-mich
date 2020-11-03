@@ -13,6 +13,7 @@ export async function getServerSideProps() {
   const weekendGalleries = await resWeekendGalleries.json()
  
   let index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
+  let counter = 10
   while (index[0] === index[1]) {
     index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
   }

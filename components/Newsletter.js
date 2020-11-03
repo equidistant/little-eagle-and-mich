@@ -1,13 +1,13 @@
 import styled from 'styled-components'
-import { H2, H4, Subtitle } from './text'
+import { H3, H4, Subtitle } from './text'
 import Link from 'next/link'
 
 const Newsletter = ({ color, bgColor }) => {
 	return (
 		<Root bgColor={bgColor}>
 			<Box>
-				<H2>Saznaj o najnovijim putovanjima</H2> 
-				<Subtitle>Kada god objavimo novi putopis ili članak sa savjetima o putovanjima, dobit ćeš obavijest ako se priključiš mailing listi!</Subtitle>
+				<H3>Saznaj o najnovijim putovanjima</H3> 
+				<SSubtitle>Kada god objavimo novi putopis ili članak sa savjetima o putovanjima, dobit ćeš obavijest ako se priključiš mailing listi!</SSubtitle>
 				<Row>
 					<InputEmail color={color} type='text' placeholder='TVOJA EMAIL ADRESA'/>
 					<SendButton color={color}>Pošalji</SendButton>
@@ -29,6 +29,13 @@ const Root = styled.div`
 	margin-bottom: 130px;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	border-radius: 20px 2px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+		margin-top: 100px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const Row = styled.div`
@@ -37,14 +44,34 @@ const Row = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 26px;
+	@media only screen and (max-width: 1079px) {
+		flex-direction: column;
+		justify-content: center;
+		margin-top: 15px;
+	}
 `
 
 const Box = styled.div`
 	width: 460px;
-	display: row;
+	flex-direction: column;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding-bottom: 60px;
+	@media only screen and (max-width: 1079px) {
+		padding-bottom: 40px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 280px;
+	}
+`
+
+const SSubtitle = styled(Subtitle)`
+	margin-top: 5px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 10px;
+		width: 200px;
+	}
 `
 
 const InputEmail = styled.input`
@@ -61,6 +88,9 @@ const InputEmail = styled.input`
 	line-height: 15px;
 	color: #989DA3;
 	width: 300px;
+	@media only screen and (max-width: 1079px) {
+		width: 200px;
+	}
 `
 
 const SendButton = styled.button`
@@ -77,6 +107,9 @@ const SendButton = styled.button`
 	text-transform: uppercase;
 	color: white;
 	cursor: pointer;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 20px;
+	}
 `
 
 

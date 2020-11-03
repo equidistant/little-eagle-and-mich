@@ -41,27 +41,66 @@ export const useRandomGallery = ({ initialGalleries }) => {
   return [gallery, handleNext]
 }
 
-export const useRows = ({ images, width, numOfRows, targetWidth }) => {
+const numOfRowsObj = {
+  940: 2,
+  525: 3,
+  300: 4
+}
+
+const targetWidthObj = {
+  940: 550,
+  525: 450,
+  300: 300
+}
+
+const marginObj = {
+  940: 10,
+  525: 7.5,
+  300: 5
+}
+
+export const useRows = ({ images }) => {
   const [previousImages, setPreviousImages] = useState([])
   const [rows, setRows] = useState([])
+  const jgRef = useRef()
+  const [margin, setMargin] = useState(0)
   const appendRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, targetWidth })
-    setRows([...rows, ...newRows])
+    const width = jgRef.current.clientWidth
+    const numOfRows = numOfRowsObj[width]
+    const targetWidth = targetWidthObj[width]
+    const margin = marginObj[width]
+    setMargin(margin)
+    if (images) {
+      const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
+      setRows([...rows, ...newRows])
+    }
   }, [rows])
   const resetRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, targetWidth })
+    const width = jgRef.current.clientWidth
+    const numOfRows = numOfRowsObj[width]
+    const targetWidth = targetWidthObj[width]
+    const margin = marginObj[width]
+    const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
+    setMargin(margin)
     setRows([...newRows])
   }, [])
   useEffect(() => {
     if (rows.length === 0) {
       appendRows({ images })
     }
-    if (previousImages !== images) {
+    if (images !== previousImages) {
       resetRows({ images })
       setPreviousImages(images)
     }
+    const resizeListener = _.debounce(() => {
+      resetRows({ images })
+    }, 100)
+    window.addEventListener('resize', resizeListener)
+    return () => {
+      window.removeEventListener('resize', resizeListener)
+    }
   }, [images, rows.length, appendRows])
-  return [rows, appendRows, resetRows]
+  return [rows, appendRows, resetRows, jgRef, margin]
 }
 export const useRowsLazy = ({ images, width, numOfRows, targetWidth }) => {
   const [previousImages, setPreviousImages] = useState([])
@@ -119,17 +158,17 @@ export const useRowsScroll = ({ images, width }) => {
 }
 
 
-const getRows = ({ images, width, numOfRows, targetWidth = 550 }) => {
+const getRows = ({ images, width, numOfRows, targetWidth = 550, margin = 10 }) => {
   const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
   let maxWidth = window.innerWidth - scrollbarWidth - 1
   if (width) {
     maxWidth = width
   }
   const minRatio = maxWidth / targetWidth
-  return buildRows({ images, maxWidth, minRatio, numOfRows })
+  return buildRows({ images, maxWidth, minRatio, numOfRows, margin })
 }
 
-const buildRows = ({ images, maxWidth, minRatio, numOfRows }) => {
+const buildRows = ({ images, maxWidth, minRatio, numOfRows, margin }) => {
   const firstImage = images[0]
   const imagesCopy = images.slice(1)
   const rowsRatios = imagesCopy.reduce((acc, image) => {
@@ -148,16 +187,17 @@ const buildRows = ({ images, maxWidth, minRatio, numOfRows }) => {
   }, [{
     ratio: firstImage.ratio, images: [firstImage]
   }])
+
   if (rowsRatios[rowsRatios.length - 1].ratio < minRatio) {
     rowsRatios.pop()
   }
-  const rowsSizes= rowsRatios.map((currentRow) => {
+  const rowsSizes = rowsRatios.map((currentRow) => {
     currentRow.images = currentRow.images.map((curr, index) => {
       if (index === 0 || index === currentRow.images.length - 1) {
-        curr.width = currentRow.height * curr.ratio - 10
+        curr.width = currentRow.height * curr.ratio - margin
         curr.height = currentRow.height
       } else {
-        curr.width = currentRow.height * curr.ratio - 20
+        curr.width = currentRow.height * curr.ratio - margin * 2
         curr.height = currentRow.height
       }
       return curr
@@ -172,9 +212,18 @@ const buildRows = ({ images, maxWidth, minRatio, numOfRows }) => {
     rowsSizes.pop()
   }
   if (numOfRows) {
-    while(numOfRows < rowsSizes.length) {
-      rowsSizes.splice(Math.floor(Math.random() * (rowsSizes.length - 1)),1)
+    const limitedRowsSizes = []
+    let indexes = []
+    for (let i = 0; i < numOfRows; i++) {
+      let index = Math.floor(Math.random() * (rowsSizes.length))
+      while(indexes.includes(index)) {
+        index = Math.floor(Math.random() * (rowsSizes.length))
+      }
+      indexes.push(index)
+      limitedRowsSizes.push(rowsSizes[index])
     }
+
+    return limitedRowsSizes
   }
   return rowsSizes
 }
@@ -385,4 +434,22 @@ export const useMouseTouchSwipe = function ({ activeImg, length, changeUrl }) {
     }
   })
   return [previous, next]
+}
+
+export const useWindow = () => {
+	const [width, setWidth] = useState(0)
+	const [height, setHeight] = useState(0)
+
+	useEffect(() => {
+		const listener = () => {
+			setWidth(window.innerWidth)
+			setHeight(window.innerHeight)
+		}
+    window.addEventListener('resize', listener)
+    if (!width) {
+      listener()
+    }
+		return () => window.removeEventListener('resize', listener)
+	},[])
+	return [width, height]
 }

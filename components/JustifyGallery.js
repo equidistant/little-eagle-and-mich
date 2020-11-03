@@ -14,23 +14,23 @@ const JustifyScrollGallery = ({ images, open, width, numOfRows, marginTop }) => 
   )
 }
 
-const JustifyGallery = ({ images, width, numOfRows, marginTop, open }) => {
-  const [rows] = useRows({ images, width, numOfRows })
+const JustifyGallery = ({ images, numOfRows, marginTop, open }) => {
+  const [rows, appendRows, resetRows, jgRef, margin] = useRows({ images, numOfRows })
   return (
-    <JustifiedGalleryContainer marginTop={marginTop} >
-        {renderRows({ rows, open })}
+    <JustifiedGalleryContainer marginTop={marginTop} ref={jgRef}>
+        {renderRows({ rows, open, margin })}
     </JustifiedGalleryContainer>
   )
 }
 
-const renderRows = ({ rows, open, }) => {
+const renderRows = ({ rows, open, margin}) => {
   return rows.map((row, index) => {
     return (
       <Row key={index}>
         {
           row.images.map(({ width, height, url, id}) => {
             return (
-              <Image url={url} height={height} width={width} key={url} handleClick={() => open(id)}/>
+              <Image margin={margin} url={url} height={height} width={width} key={url} handleClick={() => open(id)}/>
             )
           })
         }
@@ -57,10 +57,16 @@ const renderRowsLazy = ({ rows, open }) => {
 
 const JustifiedGalleryContainer = styled.div`
    margin-top: ${props => props.marginTop || 0};
-   width: 100%;
+   width: 940px;
    display: flex;
    flex-direction: column;
    align-items: center;
+   @media only screen and (max-width: 1079px) {
+     width: 525px;
+   }
+   @media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const Row = styled.div`
@@ -69,7 +75,7 @@ const Row = styled.div`
   width: min-content;
 `
 
-const Image = memo(({ url, height, width, handleClick, gap }) => {
+const Image = memo(({ url, height, width, handleClick, margin }) => {
   const imageRef = useRef(null)
   useEffect(() => {
     const observerOptions = {
@@ -90,13 +96,13 @@ const Image = memo(({ url, height, width, handleClick, gap }) => {
     return () => observer.disconnect()
   }, [])
   return (
-    <Img data-src={url} height={height} width={width} ref={imageRef} onClick={handleClick}/>
+    <Img data-src={url} height={height} width={width} ref={imageRef} onClick={handleClick} margin={margin}/>
   )
 })
 
 const Img = styled.img`
   ${props => props.width && props.height && css`
-    margin: 10px;
+    margin: ${props => props.margin}px;
     width: ${props => props.width}px;
     height: ${props => props.height}px;
   `}

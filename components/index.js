@@ -16,7 +16,12 @@ import GalleryPreview from './GalleryPreview'
 import ExploreBlogs from './ExploreBlogs'
 import LatestGalleries from './LatestGalleries'
 import LittleEaglePhoto from './LittleEaglePhoto'
+import AboutStory from './AboutStory'
+import Drawer from './Drawer'
 
 export * from './text'
+export * from './BlogCards'
 export { Header, Footer, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, JustifyGallery, JustifyScrollGallery, SwipeGallery, 
-	WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs, LatestGalleries, LittleEaglePhoto }
+	WhoAreWe, Newsletter, RecommendedBlogs, AllBlogs, GalleryList, GalleryPreview, ExploreBlogs, LatestGalleries, LittleEaglePhoto,
+	AboutStory, Drawer
+}

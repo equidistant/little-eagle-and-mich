@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, css } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -26,12 +26,18 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     min-height: 100%;
-    height: 100%;
+    height: min-content;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body {
     box-sizing: border-box;
     height: 100%;
     min-height: 100%;
+    ${props => props.hideScroll && css`
+      overflow-y: hidden;
+    `}
+    scroll-behaviour: smooth;
   }
   #root {
     box-sizing: border-box;

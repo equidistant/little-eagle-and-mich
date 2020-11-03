@@ -6,6 +6,7 @@ import useSWR, { mutate } from 'swr'
 import { paginate, useRandomGallery, getRandomInt } from '../common'
 
 export async function getServerSideProps() {
+  console.log('was here')
   const resWeekendPost = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?tags=weekend`)
   const weekendPosts = await resWeekendPost.json()
 
@@ -13,18 +14,21 @@ export async function getServerSideProps() {
   const weekendGalleries = await resWeekendGalleries.json()
  
   let index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
-  while (index[0] === index[1]) {
-    index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
-  }
-  const recommendedPosts = [weekendPosts[index[0]], weekendPosts[index[1]]]
-  
+  // while (index[0] === index[1]) {
+  //   index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
+  // }
+  // const recommendedPosts = [weekendPosts[index[0]], weekendPosts[index[1]]]
+
   return {
-    props: {
-      recommendedPosts,
-      posts: weekendPosts,
-      galleries: weekendGalleries
-    }
+    props: {}
   }
+  // return {
+  //   props: {
+  //     recommendedPosts,
+  //     posts: weekendPosts,
+  //     galleries: weekendGalleries
+  //   }
+  // }
 }
 
 const fetcher = async (url) => {
@@ -38,24 +42,7 @@ const fetcher = async (url) => {
 const HomePage = ({ posts, recommendedPosts, galleries }) => {
 	return (
     <Root>
-        <Cover img={coverWeekendImg}>
-          <HeadersRoot>
-            <HeadersCenter>
-              <H1>Vikend izleti</H1>
-                <PSubheading>
-                  Savjeti i ideje oko vikend izleta u Hrvatskoj i okolici, gdje i kako kampirati, što posjetiti
-                </PSubheading>
-              <SubheadingButton>
-                Kreni istraživati!
-              </SubheadingButton>
-            </HeadersCenter>
-          </HeadersRoot>
-        </Cover>
-        <ContentRoot>
-          <RecommendedBlogs posts={recommendedPosts} color='orange'/>
-          <AllBlogs title={'Vikend putopisi'} posts={posts} color='orange'/>
-          <GalleryList title={'Foto galerija'} galleries={galleries} color='#E8A87C'/>
-        </ContentRoot>
+        Distant
     </Root>
   )
 }

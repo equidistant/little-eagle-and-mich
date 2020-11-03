@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const enumerateImages = ({ path, length }) => {
+	return [...Array(length)].map((elem, index) => `${path}/img${index}.jpg`)
+}
+
 export const getColor = ({ tags, theme }) => {
 	if (tags.includes('weekend')) {
 		return theme.color.orange

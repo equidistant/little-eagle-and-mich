@@ -1,7 +1,9 @@
-import styled, { css } from 'styled-components'
+import styled, { css, useTheme } from 'styled-components'
 import { H3, H2, Subtitle, DateLocation } from './text'
+import { SmallBlogCard } from '.'
 import { useState } from 'react'
 import Link from 'next/link'
+import { getColor } from '../common'
 
 const useHover = () => {
 	const [index, setIndex] = useState(0)
@@ -13,17 +15,26 @@ const useHover = () => {
 
 const LatestBlogs = ({ posts }) => {
 	const [index, handleMouseEnter] = useHover()
+	const theme = useTheme()
 	return (
 		<Root>
 			<Center>
 				<SH2>Najnoviji putopisi</SH2>
-				<Row>
+				<LargeCards>
 					<Cards>
 						<NavLink href={`/post/${posts[0].title}`}>
 							<OrangeCard onMouseEnter={() => handleMouseEnter(0)}>
 								<TextCardBackground color='orange'/>
 								<TextCardContent>
-									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+									<DateLocationRow>
+										<DateLocation>
+												27.10.2019.
+										</DateLocation>
+										<Separator/>
+										<DateLocation>
+											{posts[0].location}
+										</DateLocation>
+									</DateLocationRow>
 									<SH3 active={index === 0} color='orange'>{posts[0].longTitle}</SH3>
 									<Subtitle textAlign='start'>
 									{posts[0].description}
@@ -56,14 +67,15 @@ const LatestBlogs = ({ posts }) => {
 							</BlueCard>
 						</NavLink>
 					</Cards>
-				
 					<ImageRoot>
 						<Image src={posts[0].coverImg} active={index === 0}/>
 						<Image src={posts[1].coverImg} active={index === 1}/>
 						<Image src={posts[2].coverImg} active={index === 2}/>
 					</ImageRoot>
-				</Row>
-
+				</LargeCards>
+				<SmallCards>
+					{posts.map((post, index) => <SmallBlogCard post={post} margintop='24px' key={index}/>)}
+				</SmallCards>
 			</Center>	
 		</Root>
 	)
@@ -75,24 +87,58 @@ const Root = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 940px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const Center = styled.div`
-	width: 100%;
+	width: calc(100% - 80px);
 	display: flex;
 	flex-direction: column;
 	margin-left: 80px;
+	@media only screen and (max-width: 1079px) {
+		margin-left: 0px;
+		width: 100%;
+	}
+
 `
 
 const SH2 = styled(H2)`
 	margin-top: 130px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 100px;
+	}
 `
 
-const Row = styled.div`
+const LargeCards = styled.div`
 	display: flex;
 	width: 100%;
 	height: min-content;
 	margin-top: 40px;
+	margin-left: 10px;
+	@media only screen and (max-width: 1420px) {
+		display: none;
+	}
+`
+
+const SmallCards = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: min-content;
+	margin-top: 40px;
+	margin-left: 10px;
+	max-width: 710px;
+	@media only screen and (min-width: 1420px) {
+		display: none;
+	}
+	@media only screen and (max-width: 1079px) {
+		max-width: 520px;
+	}
 `
 
 const Cards = styled.div`
@@ -100,7 +146,6 @@ const Cards = styled.div`
 	display: flex;	
 	flex-direction: column;
 	width: 460px;
-	margin-left: 10px;
 `
 
 const OrangeCard = styled.div`
@@ -168,6 +213,21 @@ const SH3 = styled(H3)`
 	${props => props.active && props.color === 'blue' && css`
 		color: #82C6DB;
 	`}
+`
+
+const DateLocationRow = styled.div`
+	display: flex;
+	width: min-content;
+	justify-content: space-between;
+	align-items: center;
+	color: ${props => props.theme.color.gray};
+`
+
+const Separator = styled.div`
+	border-left: 1px solid ${props => props.theme.color.gray};
+	height: 14px;
+	margin-left: 20px;
+	margin-right: 20px;
 `
 
 const ImageRoot = styled.div`

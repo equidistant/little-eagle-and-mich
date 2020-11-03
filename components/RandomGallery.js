@@ -9,7 +9,7 @@ const RandomGallery = ({ handleNext, title, longTitle, ...rest }) => {
 	const router = useRouter()
 	const open = (id) => {
 		router.push(`/gallery/${title}?activeImg=${id}`)
-	  }
+	}
 	return (
 		<Root>
 			<Row>
@@ -42,6 +42,12 @@ const Row = styled.div`
 	width: 940px;
 	align-items: center;
 	margin-top: -30px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const RandomImg = styled.img`
@@ -51,17 +57,35 @@ const RandomImg = styled.img`
 	&:hover {
 		cursor: pointer;
 	}
+	@media only screen and (max-width: 1079px) {
+		margin-left: -30px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 52px;
+		height: 52px;
+	}
 `
 
 const Vector1Img = styled.img`
 	width: 93px;
 	height: 23px;
 	margin-left: 10px;
+	@media only screen and (max-width: 660px) {
+		width: 70px;
+		height: 18px;
+	}
 `
 
 const IndiePressForRandom = styled(Indie)`
 	transform: rotate(2.53deg);
-	margin-left: 23px;
+	text-align: center;
+	margin-left: 20px;
+	@media only screen and (max-width: 660px) {
+		margin-left: 5px;
+		width: 223px;
+		flex: 1;
+	}
+	
 `
 
 const SLink = styled.a`
@@ -87,6 +111,10 @@ const SH4White= styled(H4)`
 const VisitGalleryRow = styled.div`
 	margin-top: 40px;
 	margin-bottom: 40px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
 `
 
 const VisitGalleryButton = ({ href, name }) => {

@@ -23,23 +23,44 @@ const Root = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 940px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const Center = styled.div`
-	width: min-content;
+	width: 700px;
 	display: flex;
 	flex-direction: column;
 	margin-left: 80px;
+	@media only screen and (max-width: 1079px) {
+		margin-left: 0px;
+		width: 100%;
+	}
 `
 
 const SH2 = styled(H2)`
 	margin-top: 130px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 100px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 100px;
+	}
 `
 
 const BlogCards = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 40px;
+	@media only screen and (max-width: 660px) {
+		align-items: flex-start;
+		flex-direction: column;
+		margin-top: 20px;
+	}
 `
 
 const NavLink = ({ href, children }) => {
@@ -67,16 +88,16 @@ const BlogCategoryCard = ({ color, href, title, description, img }) => {
 
 const CardRoot = styled.div`
 	position: relative;
-	width: 220px;
+	width: 100%;
 	height: 310px;
 	display: flex;
 	flex-direction: column;
-	margin-left: 30px;
-	&:first-of-type {
-		margin-left: 0;
-	}
+
 	border-radius: 20px 2px;
-	background: url(${props => props.img});
+	background-image: url(${props => props.img});
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -85,6 +106,23 @@ const CardRoot = styled.div`
 		cursor: pointer;
 	}
 	z-index: 3;
+	@media only screen and (min-width: 660px) {
+		margin-left: 30px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+	}
+	@media only screen and (max-width: 1079px) {
+		height: 225px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 16px;
+		height: 120px;
+		margin-left: 0px;
+		&:first-of-type {
+			margin-top: 0;
+		}
+	}
 `
 
 const Overlay = styled.div`
@@ -130,12 +168,28 @@ const Text = styled.div`
 	${CardRoot}:hover &{
 		transform: translateY(60px);
 	}
+	@media only screen and (max-width: 1079px) {
+		transform: translateY(140px);
+		${CardRoot}:hover &{
+			transform: translateY(20px);
+		}
+	}
+	@media only screen and (max-width: 660px) {
+		transform: translateY(70px);
+		${CardRoot}:hover &{
+			transform: translateY(20px);
+		}
+	}
 `
 
 const SH3 = styled(H3)`
 	color: white;
 	width: 60%;
 	transform: rotate(-4.44deg);
+	@media only screen and (max-width: 660px) {
+		transform: rotate(-3deg);
+		width: 100%;
+	}
 `
 
 const SSubtitle = styled(Subtitle)`
@@ -145,6 +199,15 @@ const SSubtitle = styled(Subtitle)`
 	transition: margin .2s cubic-bezier(.4,0,.2,.1);
 	${CardRoot}:hover &{
 		margin-top: 30px;
+	}
+	@media only screen and (max-width: 1079px) {
+		${CardRoot}:hover &{
+			margin-top: 15px;
+		}
+		width: 75%;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 90%;
 	}
 	text-align: start;
 `

@@ -99,27 +99,6 @@ const PSubheading = styled(Subheading)`
   margin-top: 25px;
 `
 
-const SubheadingButton = styled.button`
-  border: 3px solid #E8A87C;
-  border-radius: 20px 2px;
-  width: 231px;
-  height: 40px;
-  background: transparent;
-  font-family: Lobster;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 30px;
-
-  color: #FFFCF9;
-  transform: matrix(1, 0.01, -0.01, 1, 0, 0);
-
-  margin-top: 25px;
-  margin-left: 160px;
-  cursor: pointer;
-  background: #E8A87C;
-`
-
 const ContentRoot = styled.div`
   width: 100%;
   display: flex;
