@@ -40,7 +40,7 @@ const Root = styled.div`
 	flex-direction: row;
 	align-items: space-between;
 	justify-content: center;
-	width: 940px;
+	width: 780px;
 	@media only screen and (max-width: 1079px) {
 		width: 525px;
 	}

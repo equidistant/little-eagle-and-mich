@@ -5,14 +5,12 @@ import Link from 'next/link'
 const BlogCategories = () => {
 	return (
 		<Root>
-			<Center>
 				<SH2>Istraži putopise i savjete</SH2>
 				<BlogCards>
 					<BlogCategoryCard href='/weekend' color='orange' title='Vikend izleti' description='Savjeti i ideje oko vikend izleta, gdje i kako kampirati, što posjetiti.' img='https://littleeagle.s3.eu-central-1.amazonaws.com/gallery/low/travels/img128.jpg'/>
 					<BlogCategoryCard href='/local' color='green' title='Lokalna putovanja' description='Dulja (dva-tri tjedna) putovanja u Hrvatskoj i okolnim zemljama. ' img='https://littleeagle.s3.eu-central-1.amazonaws.com/gallery/low/travels/img128.jpg'/>
 					<BlogCategoryCard href='/distant' color='blue' title='Daleke avanture' description='Dulja putovanja u daleke zemlje - što vidjeti i kako se pripremiti.' img='https://littleeagle.s3.eu-central-1.amazonaws.com/gallery/low/travels/img128.jpg'/>
 				</BlogCards>
-			</Center>	
 		</Root>
 	)
 }
@@ -22,7 +20,7 @@ const Root = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
-	width: 940px;
+	width: 780px;
 	@media only screen and (max-width: 1079px) {
 		width: 525px;
 	}
@@ -35,9 +33,7 @@ const Center = styled.div`
 	width: 700px;
 	display: flex;
 	flex-direction: column;
-	margin-left: 80px;
 	@media only screen and (max-width: 1079px) {
-		margin-left: 0px;
 		width: 100%;
 	}
 `

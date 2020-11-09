@@ -21,7 +21,7 @@ const Root = styled.div`
 	flex-direction: column;
 	align-items: space-between;
 	justify-content: center;
-	width: 940px;
+	width: 780px;
 	@media only screen and (max-width: 1079px) {
 		width: 525px;
 	}
@@ -31,14 +31,12 @@ const Root = styled.div`
 `
 
 const Row = styled.div`
-	width: calc(100% - 80px);
+	width: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	margin-top: 175px;
-	margin-left: 80px;
 	@media only screen and (max-width: 1079px) {
-		margin-left: 0px;
 		margin-top: 130px;
 	}
 `
@@ -60,7 +58,6 @@ const SLink = styled.a`
 
 
 const YoutubeVideo = styled.iframe`
-	margin-left: 80px;
 	width: 780px;
 	height: 440px;
 	margin-top: 30px;
@@ -70,12 +67,10 @@ const YoutubeVideo = styled.iframe`
 	@media only screen and (max-width: 1079px) {
 		width: 525px;
 		height: 290px;
-		margin-left: 0px;
 	}
 	@media only screen and (max-width: 660px) {
 		width: 300px;
 		height: 160px;
-		margin-left: 0px;
 	}
 `
 

@@ -1,9 +1,9 @@
 import styled, { css, useTheme } from 'styled-components'
 import Link from 'next/link'
 import { H4, Subtitle, DateLocation } from './text'
-import { getColor } from '../common'
+import { getColor, millisToString } from '../common'
 
-export const SmallBlogCard = ({ post: {title, tags, longTitle, description, coverImg, location}, marginleft = 0, margintop = 0 }) => {
+const SmallBlogCard = ({ post: {title, created, tags, longTitle, description, coverImg, location}, marginleft = 0, margintop = 0 }) => {
 	const theme = useTheme()
 	const color = getColor({ tags, theme })
 	return (
@@ -15,7 +15,7 @@ export const SmallBlogCard = ({ post: {title, tags, longTitle, description, cove
 					<CardText>
 						<DateLocationRow>
 							<DateLocation>
-								27.10.2019.
+								{millisToString({ date: new Date(created) })}
 							</DateLocation>
 							<Separator />
 							<DateLocation>
@@ -34,6 +34,8 @@ export const SmallBlogCard = ({ post: {title, tags, longTitle, description, cove
 
 	)
 }
+
+export default SmallBlogCard
 
 const Card = styled.div`
 	width: 100%;
@@ -95,11 +97,11 @@ const DateLocationRow = styled.div`
 	width: min-content;
 	justify-content: space-between;
 	align-items: center;
-	color: ${props => props.theme.color.dark};
+	color: ${props => props.theme.color.gray};
 `
 
 const Separator = styled.div`
-	border-left: 1px solid ${props => props.theme.color.dark};
+	border-left: 1px solid ${props => props.theme.color.gray};
 	height: 80%;
 	margin-left: 20px;
 	margin-right: 20px;

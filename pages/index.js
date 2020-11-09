@@ -110,7 +110,7 @@ const PSubheading = styled(Subheading)`
     width: 50%;
   }
   @media only screen and (max-width: 660px) {
-    width: 60%;
+    width: 80%;
     font-size: 14px;
     line-height: 17.5px;
   }
@@ -127,10 +127,12 @@ const SubheadingButton = styled.button`
   font-weight: normal;
   font-size: 24px;
   line-height: 30px;
+  margin-left: 25%;
   @media only screen and (max-width: 1079px) {
     max-width: 200px;
     font-size: 20px;
     line-height: 25px;
+    margin-left: 0;
   }
   @media only screen and (max-width: 660px) {
     font-size: 18px;

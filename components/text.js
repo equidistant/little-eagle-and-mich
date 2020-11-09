@@ -126,6 +126,7 @@ export const DateLocation = styled.p`
   line-height: 18px;
   color: inherit;
   width: max-content;
+  color: ${props => props.theme.color.gray};
 `
 
 export const AboutText = styled.p`

@@ -18,7 +18,6 @@ const LatestBlogs = ({ posts }) => {
 	const theme = useTheme()
 	return (
 		<Root>
-			<Center>
 				<SH2>Najnoviji putopisi</SH2>
 				<LargeCards>
 					<Cards>
@@ -46,7 +45,15 @@ const LatestBlogs = ({ posts }) => {
 							<GreenCard onMouseEnter={() => handleMouseEnter(1)}>
 								<TextCardBackground color='green'/>
 								<TextCardContent>
-									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+								<DateLocationRow>
+										<DateLocation>
+												27.10.2019.
+										</DateLocation>
+										<Separator/>
+										<DateLocation>
+											{posts[0].location}
+										</DateLocation>
+									</DateLocationRow>
 									<SH3 active={index === 1} color='green'>{posts[1].longTitle}</SH3>
 									<Subtitle textAlign='start'>
 									{posts[1].description}
@@ -58,7 +65,15 @@ const LatestBlogs = ({ posts }) => {
 							<BlueCard onMouseEnter={() => handleMouseEnter(2)}>
 								<TextCardBackground color='blue'/>
 								<TextCardContent>
-									<DateLocation>15.02.2020 | Lokacija</DateLocation>
+								<DateLocationRow>
+										<DateLocation>
+												27.10.2019.
+										</DateLocation>
+										<Separator/>
+										<DateLocation>
+											{posts[0].location}
+										</DateLocation>
+									</DateLocationRow>
 									<SH3 active={index === 2} color='blue'>{posts[2].longTitle}</SH3>
 									<Subtitle textAlign='start'>
 									{posts[2].description}
@@ -76,7 +91,6 @@ const LatestBlogs = ({ posts }) => {
 				<SmallCards>
 					{posts.map((post, index) => <SmallBlogCard post={post} margintop='24px' key={index}/>)}
 				</SmallCards>
-			</Center>	
 		</Root>
 	)
 }
@@ -86,25 +100,13 @@ const Root = styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: center;
-	width: 940px;
+	width: 780px;
 	@media only screen and (max-width: 1079px) {
 		width: 525px;
 	}
 	@media only screen and (max-width: 660px) {
 		width: 300px;
 	}
-`
-
-const Center = styled.div`
-	width: calc(100% - 80px);
-	display: flex;
-	flex-direction: column;
-	margin-left: 80px;
-	@media only screen and (max-width: 1079px) {
-		margin-left: 0px;
-		width: 100%;
-	}
-
 `
 
 const SH2 = styled(H2)`

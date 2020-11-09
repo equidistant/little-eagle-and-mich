@@ -13,7 +13,6 @@ export async function getServerSideProps() {
   const weekendGalleries = await resWeekendGalleries.json()
  
   let index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
-  let counter = 10
   while (index[0] === index[1]) {
     index = [getRandomInt(weekendPosts.length), getRandomInt(weekendPosts.length)]
   }
@@ -88,18 +87,35 @@ const HeadersRoot = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 940px;
+  width: 780px;
+  @media only screen and (max-width: 1079px) {
+    width: 525px;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 300px;
+  }
 `
 
 const HeadersCenter = styled.div`
   width: min-content;
   display: flex;
   flex-direction: column;
-  margin-left: 80px;
 `
 
 const PSubheading = styled(Subheading)`
   width: 95%;
   margin-top: 25px;
+  @media only screen and (max-width: 1220px) {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 20px;
+    width: 75%;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 80%;
+    font-size: 14px;
+    line-height: 17.5px;
+  }
 `
 
 const SubheadingButton = styled.button`
@@ -121,6 +137,17 @@ const SubheadingButton = styled.button`
   margin-left: 160px;
   cursor: pointer;
   background: #E8A87C;
+
+  @media only screen and (max-width: 1079px) {
+    max-width: 200px;
+    font-size: 20px;
+    line-height: 25px;
+    margin-left: 0;
+  }
+  @media only screen and (max-width: 660px) {
+    font-size: 18px;
+    line-height: 22.5px;
+  }
 `
 
 const ContentRoot = styled.div`

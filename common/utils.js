@@ -1,5 +1,14 @@
 import styled from 'styled-components'
 
+export const millisToString = ({ date = new Date(Date.now()), full = false}) => {
+	const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+	const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+	const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+	const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+	const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
+	return full ? `${day}.${month}.${date.getFullYear()}. ${hours}:${minutes}:${seconds}` : `${day}.${month}.${date.getFullYear()}.`
+}
+
 export const enumerateImages = ({ path, length }) => {
 	return [...Array(length)].map((elem, index) => `${path}/img${index}.jpg`)
 }

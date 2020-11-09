@@ -5,12 +5,10 @@ import { H2, H3, Subtitle, DateLocation } from './text'
 const GalleryList = ({ title, color, galleries }) => {
 	return (
 		<Root>
-			<Center>
-				<SH2>{title}</SH2>
-				<Cards>
-					{galleries.map((gallery, index) => <CCard gallery={gallery} color={color} key={index}/>)}
-				</Cards>
-			</Center>
+			<SH2>{title}</SH2>
+			<Cards>
+				{galleries.map((gallery, index) => <CCard gallery={gallery} color={color} key={index}/>)}
+			</Cards>
 		</Root>
 	)
 }
@@ -21,17 +19,22 @@ const Root = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 940px;
-`
-
-const Center = styled.div`
-	width: min-content;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const SH2 = styled(H2)`
 	margin-top: 130px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 100px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 75px;
+	}
 `
 
 const Cards = styled.div`
@@ -41,12 +44,17 @@ const Cards = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	@media only screen and (max-width: 660px) {
+		flex-direction: column;
+		align-items: center;
+		margin-top: 15px;
+	}
 `
 
 const Card = styled.div`
 	display: flex;
 	position: relative;
-	width: 300px;
+	width: calc(33% - 10px);
 	height: 352px;
 	border-radius: 20px 2px;
 	cursor: pointer;
@@ -57,6 +65,13 @@ const Card = styled.div`
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	margin-top: 16px;
 	z-index: 3;
+	@media only screen and (max-width: 1079px) {
+		width: calc(50% - 10px);
+		height: 335px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: calc(100% - 40px);
+	}
 `
 
 const Overlay = styled.div`
