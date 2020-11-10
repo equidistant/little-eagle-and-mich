@@ -44,11 +44,6 @@ const Cards = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	@media only screen and (max-width: 660px) {
-		flex-direction: column;
-		align-items: center;
-		margin-top: 15px;
-	}
 `
 
 const Card = styled.div`
@@ -70,7 +65,8 @@ const Card = styled.div`
 		height: 335px;
 	}
 	@media only screen and (max-width: 660px) {
-		width: calc(100% - 40px);
+		width: calc(50% - 10px);
+		height: 186px;
 	}
 `
 
@@ -115,6 +111,11 @@ const CardText = styled.div`
 	padding-right: 50px;
 	padding-bottom: 32px;
 	z-index: 2;
+	@media only screen and (max-width: 660px) {
+		padding-left: 15px;
+		padding-right: 20px;
+		padding-bottom: 15px;
+	}
 `
 
 const SH3 = styled(H3)`
@@ -123,11 +124,6 @@ const SH3 = styled(H3)`
 	${Card}:hover & {
 		color: ${props => props.color};
 	}
-`
-
-const SSubtitle = styled(Subtitle)`
-	color: #FFFCF9;
-	margin-top: 7px;
 `
 
 const NavLink = ({ href, children }) => {
@@ -140,12 +136,14 @@ const NavLink = ({ href, children }) => {
 
 const CCard = ({ color, gallery: {title, longTitle, coverImg} }) => {
 	return (
-	<Card src={coverImg}>
-		<Overlay color={color}/>
-		<CardText>
-			<SH3 color={color}>{longTitle}</SH3>
-		</CardText>
-	</Card>
+		<NavLink href={`/gallery/${title}`}>
+			<Card src={coverImg}>
+				<Overlay color={color}/>
+				<CardText>
+					<SH3 color={color}>{longTitle}</SH3>
+				</CardText>
+			</Card>
+		</NavLink>
 	)
 }
 

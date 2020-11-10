@@ -7,12 +7,10 @@ const LatestGalleries = ({ title, galleries }) => {
 	const theme = useTheme()
 	return (
 		<Root>
-			<Center>
-				<SH2>{title}</SH2>
-				<Cards>
-					{galleries.map((gallery, index) => <CCard {...gallery} color={getColor({ tags: gallery.tags, theme })} key={index}/>)}
-				</Cards>
-			</Center>
+			<SH2>{title}</SH2>
+			<Cards>
+				{galleries.map((gallery, index) => <CCard {...gallery} color={getColor({ tags: gallery.tags, theme })} key={index}/>)}
+			</Cards>
 		</Root>
 	)
 }
@@ -23,16 +21,21 @@ const Root = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 940px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
-
-const Center = styled.div`
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-`
-
 const SH2 = styled(H2)`
 	margin-top: 130px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 100px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 75px;
+	}
 `
 
 const Cards = styled.div`
@@ -42,12 +45,18 @@ const Cards = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 20px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 10px;
+	}
 `
 
 const Card = styled.div`
 	display: flex;
 	position: relative;
-	width: 459px;
+	width: calc(50% - 10px);
 	height: 352px;
 	border-radius: 20px 2px;
 	cursor: pointer;
@@ -58,6 +67,28 @@ const Card = styled.div`
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	margin-top: 16px;
 	z-index: 3;
+	@media only screen and (min-width: 1079px) {
+		margin-left: 10px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+	}
+	@media only screen and (max-width: 1079px) {
+		width: 100%;
+		margin-top: 20px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		height: 300px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 100%;
+		margin-top: 20px;
+		&:first-of-type {
+			margin-left: 0;
+		}
+		height: 215px;
+	}
 `
 
 const Overlay = styled.div`

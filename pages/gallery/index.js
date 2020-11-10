@@ -43,12 +43,10 @@ const GalleryPage = ({ latest, weekend, local, distant }) => {
     <Root>
         <Cover img={coverGalleryImg}>
           <HeadersRoot>
-            <HeadersCenter>
-              <H1>Galerija Fotografija</H1>
-                <PSubheading>
-                  Za one kojima su fotke sasvim dovoljne
-                </PSubheading>
-            </HeadersCenter>
+            <H1>Galerija Fotografija</H1>
+              <PSubheading>
+                Za one kojima su fotke sasvim dovoljne
+              </PSubheading>
           </HeadersRoot>
         </Cover>
         <ContentRoot>
@@ -84,19 +82,29 @@ const HeadersRoot = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 940px;
-`
-
-const HeadersCenter = styled.div`
-  width: min-content;
-  display: flex;
-  flex-direction: column;
-  margin-left: 80px;
+  width: 780px;
+  @media only screen and (max-width: 1079px) {
+    width: 525px;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 300px;
+  }
 `
 
 const PSubheading = styled(Subheading)`
   width: 95%;
   margin-top: 25px;
+  @media only screen and (max-width: 1220px) {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 20px;
+    width: 50%;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 80%;
+    font-size: 14px;
+    line-height: 17.5px;
+  }
 `
 
 const ContentRoot = styled.div`

@@ -41,13 +41,18 @@ const Card = styled.div`
 	width: 100%;
 	position: relative;
 	border-radius: 20px 2px;
-	margin-left: ${props => props.marginleft};
-	margin-top: ${props => props.margintop};
-	&:first-of-type {
-		margin-left: 0;
-		margin-top: 0;
-	}
 	cursor: pointer;
+	@media only screen and (min-width: 1079px) {
+		margin-left: ${props => props.marginleft};
+		margin-top: ${props => props.margintop};
+		&:first-of-type {
+			margin-left: 0;
+			margin-top: 0;
+		}		
+	}
+	@media only screen and (max-width: 1079px) {
+		margin-top: 30px;
+	}
 `
 
 const CardBackground = styled.div`

@@ -6,10 +6,10 @@ import { useRows, useRowsScroll, paginate } from '../common'
 
 const JustifyScrollGallery = ({ images, open, width, numOfRows, marginTop }) => {
   const router = useRouter()
-  const [rows, galleryRef] = useRowsScroll({ images, width, numOfRows })
+  const [rows, galleryRef, margin] = useRowsScroll({ images, width, numOfRows })
   return (
     <JustifiedGalleryContainer marginTop={marginTop} ref={galleryRef}>
-        {renderRowsLazy({ rows, open })}
+        {renderRowsLazy({ rows, open, margin })}
     </JustifiedGalleryContainer>
   )
 }
@@ -23,7 +23,7 @@ const JustifyGallery = ({ images, numOfRows, marginTop, open }) => {
   )
 }
 
-const renderRows = ({ rows, open, margin}) => {
+const renderRows = ({ rows, open, margin }) => {
   return rows.map((row, index) => {
     return (
       <Row key={index}>
@@ -39,14 +39,15 @@ const renderRows = ({ rows, open, margin}) => {
   })
 }
 
-const renderRowsLazy = ({ rows, open }) => {
+const renderRowsLazy = ({ rows, open, margin }) => {
+  console.log(margin)
   return rows.map((row, index) => {
     return (
       <Row key={index}>
         {
           row.images.map(({ width, height, url, id}) => {
             return (
-              <Image url={url} height={height} width={width} key={url} handleClick={() => open(id)} />
+              <Image margin={margin} url={url} height={height} width={width} key={url} handleClick={() => open(id)} />
             )
           })
         }

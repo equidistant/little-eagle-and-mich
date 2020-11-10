@@ -17,11 +17,10 @@ const RandomGallery = ({ handleNext, title, longTitle, ...rest }) => {
 				<Vector1Img src={vector1Img}/>
 				<IndiePressForRandom>pritisni za otkrivanje novih fotki</IndiePressForRandom>
 			</Row>
-			<JustifyGallery {...rest} marginTop={'23px'} gap={'20px'} title={title} open={open}/>
+			<JustifyGallery {...rest} marginTop={'23px'} title={title} open={open}/>
 			<VisitGalleryRow>
 				<VisitGalleryButton href={`/gallery/${title}`} name={longTitle}/>
-			</VisitGalleryRow>
-			
+			</VisitGalleryRow>		
 		</Root>
 	)
 }

@@ -104,13 +104,21 @@ const PortraitImage = styled.img`
   max-width: 460px;
   &:first-of-type {
 	margin-right: 10px;
-}
-  &:last-of-type {
-	  margin-left: 10px;
-  }
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
-border-radius: 20px 2px;
-margin-top: 20px;
+	}
+	&:last-of-type {
+		margin-left: 10px;
+	}
+	filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
+	border-radius: 20px 2px;
+	margin-top: 20px;
+	@media only screen and (max-width: 1079px) {
+		max-width: 252.5px;
+		margin-top: 15px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 10px;
+		max-width: 140px;
+	}
 `
 
 const Text = styled.p`
@@ -120,8 +128,19 @@ const Text = styled.p`
 	font-size: 18px;
 	line-height: 23px;  
 	color: #434850;
-	width: 740px;
+	width: 100%;
+	max-width: 740px;
 	margin-top: 60px;
+	@media only screen and (max-width: 1079px) {
+		max-width: 340px;
+		margin-top: 40px;
+	}
+	@media only screen and (max-width: 660px) {
+		max-width: 300px;
+		margin-top: 20px;
+		font-size: 16px;
+		line-height: 20px;  
+	}
 `
 
 const BoldText = styled.p`
@@ -131,7 +150,18 @@ const BoldText = styled.p`
 	font-size: 18px;
 	line-height: 23px;
 	color: #434850;
-	width: 740px;
-	margin-top: 40px;
+	width: 100%;
+	max-width: 740px;
+	margin-top: 60px;
+	@media only screen and (max-width: 1079px) {
+		max-width: 340px;
+		margin-top: 40px;
+	}
+	@media only screen and (max-width: 660px) {
+		max-width: 300px;
+		margin-top: 20px;
+		font-size: 16px;
+		line-height: 26px;
+	}
 `
 

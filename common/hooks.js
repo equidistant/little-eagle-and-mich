@@ -102,15 +102,21 @@ export const useRows = ({ images }) => {
   }, [images, rows.length, appendRows])
   return [rows, appendRows, resetRows, jgRef, margin]
 }
+
 export const useRowsLazy = ({ images, width, numOfRows, targetWidth }) => {
-  const [previousImages, setPreviousImages] = useState([])
   const [rows, setRows] = useState([])
+  const [margin, setMargin] = useState(0)
+  const galleryRef = useRef(null)
   const appendRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, targetWidth })
+    const margin = marginObj[width]
+    const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
+    setMargin(margin)
     setRows([...rows, ...newRows])
   }, [rows])
   const resetRows = useCallback(({ images }) => {
-    const newRows = getRows({ images, width, numOfRows, targetWidth })
+    const margin = marginObj[width]
+    const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
+    setMargin(margin)
     setRows([...newRows])
   }, [])
   useEffect(() => {
@@ -118,13 +124,12 @@ export const useRowsLazy = ({ images, width, numOfRows, targetWidth }) => {
       appendRows({ images })
     }
   }, [images, rows.length, appendRows])
-  return [rows, appendRows, resetRows]
+  return [rows, appendRows, resetRows, galleryRef, margin]
 }
 
 export const useRowsScroll = ({ images, width }) => {
   const page = useRef(0)
-  const galleryRef = useRef(null)
-  const [rows, appendRows, resetRows] = useRowsLazy({ images: images[page.current], width })
+  const [rows, appendRows, resetRows, galleryRef, margin] = useRowsLazy({ images: images[page.current], width })
   useEffect(() => {
     if (galleryRef.current.clientHeight < window.innerHeight) {
       if (rows.length > 0) {
@@ -154,7 +159,7 @@ export const useRowsScroll = ({ images, width }) => {
       window.removeEventListener('scroll', scrollListener)
     }
   }, [appendRows, resetRows, images, rows])
-  return [rows, galleryRef]
+  return [rows, galleryRef, margin]
 }
 
 

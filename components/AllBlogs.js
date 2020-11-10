@@ -66,6 +66,7 @@ const Card = styled.div`
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 	margin-top: 16px;
 	z-index: 3;
+	cursor: pointer;
 	@media only screen and (min-width: 1079px) {
 		&:nth-child(2n) {
 			margin-left: 20px;
@@ -180,29 +181,31 @@ const NavLink = ({ href, children }) => {
 
 const CCard = ({ color, post: {title, location, created, longTitle, description, coverImg} }) => {
 	return (
-	<Card src={coverImg}>
-		<Overlay color={color}/>
-		<CardText>
-			<DateLocationRow>
-				<SDateLocation>
-					{millisToString({ date: new Date(created) })}
-				</SDateLocation>
-				<Separator />
-				<SDateLocation>
-					{location}
-				</SDateLocation>
-			</DateLocationRow>
-			<Middle>
-				<SH3>{longTitle}</SH3>
-				<SSubtitle textAlign='start' color='dark'>
-						{description}
-				</SSubtitle>
-			</Middle>
-			<NavLink href={`/post/${title}`}>
-				<SSubtitleLink>Pročitaj više</SSubtitleLink>
-			</NavLink>
-		</CardText>
-	</Card>
+		<NavLink href={`/post/${title}`}>
+			<Card src={coverImg}>
+				<Overlay color={color}/>
+				<CardText>
+					<DateLocationRow>
+						<SDateLocation>
+							{millisToString({ date: new Date(created) })}
+						</SDateLocation>
+						<Separator />
+						<SDateLocation>
+							{location}
+						</SDateLocation>
+					</DateLocationRow>
+					<Middle>
+						<SH3>{longTitle}</SH3>
+						<SSubtitle textAlign='start' color='dark'>
+								{description}
+						</SSubtitle>
+					</Middle>
+					<NavLink href={`/post/${title}`}>
+						<SSubtitleLink>Pročitaj više</SSubtitleLink>
+					</NavLink>
+				</CardText>
+			</Card>
+		</NavLink>
 	)
 }
 

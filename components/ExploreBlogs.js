@@ -8,12 +8,10 @@ const ExploreBlogs = ({ posts, title }) => {
 	const explorePosts = useExplorePosts({ posts, title })
 	return (
 		<Root>
-			<Center>
-				<SH2>Nastavi istraživati putopise:</SH2>
-				<Cards>
-					{explorePosts.map((post, index) => <SmallBlogCard post={post} color={getColor({ tags: post.tags, theme })} marginleft='24px' key={index}/>)}
-				</Cards>
-			</Center>
+			<SH2>Nastavi istraživati putopise:</SH2>
+			<Cards>
+				{explorePosts.map((post, index) => <SmallBlogCard post={post} color={getColor({ tags: post.tags, theme })} marginleft='24px' key={index}/>)}
+			</Cards>
 		</Root>
 	)
 }
@@ -24,13 +22,12 @@ const Root = styled.div`
 	align-items: flex-start;
 	justify-content: center;
 	width: 940px;
-`
-
-const Center = styled.div`
-	width: min-content;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const SH2 = styled(H2)`
@@ -41,8 +38,12 @@ const Cards = styled.div`
 	display: flex;
 	flex-direction: row;
 	margin-top: 40px;
-	width: 940px;
-	height: 130px;
+	width: 100%;
+	@media only screen and (max-width: 1079px) {
+		flex-direction: column;
+		align-items: center;
+		margin-top: 15px;
+	}
 `
 
 export default ExploreBlogs

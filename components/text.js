@@ -85,6 +85,10 @@ export const Subheading = styled.p`
   font-size: 18px;
   line-height: 23px;
   color: #FFFFFF;
+  @media only screen and (max-width: 660px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
 `
 
 export const Body = styled.p`

@@ -56,6 +56,12 @@ const Root = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media only screen and (max-width: 1079px) {
+    padding-bottom: 75px;
+	}
+	@media only screen and (max-width: 660px) {
+    padding-bottom: 50px;
+	}
 `
 
 const Cover = styled.div`
@@ -78,6 +84,14 @@ const ContentRoot = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 40px;
+  @media only screen and (max-width: 1079px) {
+    width: 525px;
+    margin-top: 30px;
+	}
+	@media only screen and (max-width: 660px) {
+    margin-top: 20px;
+    width: 300px;
+	}
 `
 
 const Title = styled.h1`
@@ -88,21 +102,48 @@ const Title = styled.h1`
   line-height: 80px;
   color: #434850;
   margin-top: 20px;
-  width: 620px;
+  width: 100%;
   text-align: center;
+  @media only screen and (max-width: 1079px) {
+    max-width: 340px;
+    font-size: 48px;
+    line-height: 60px;
+  }
+  @media only screen and (max-width: 660px) {
+    max-width: 300px;
+    font-size: 36px;
+    line-height: 45px;
+	}
 `
 
 const SSubheading = styled(Subheading)`
   color: #434850;
-  width: 620px;
+  width: 100%;
+  max-width: 620px;
   text-align: center;
+  margin-top: 20px;
+  @media only screen and (max-width: 1079px) {
+    margin-top: 10px;
+    max-width: 340px;
+  }
+  @media only screen and (max-width: 660px) {
+    max-width: 300px;
+    font-size: 16px;
+    line-height: 22px;
+	}
 `
 
 const Content = styled.div`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media only screen and (max-width: 1079px) {
+    margin-top: 50px;
+  }
+  @media only screen and (max-width: 660px) {
+    margin-top: 25px;
+	}
 `
