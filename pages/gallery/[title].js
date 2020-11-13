@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Subheading, JustifyScrollGallery, SwipeGallery, ExploreBlogs, Newsletter, LittleEaglePhoto } from '../../components'
+import { H1, Subheading, JustifyScrollGallery, SwipeGallery, ExploreBlogs, Newsletter, LittleEaglePhoto } from '../../components'
 import { buildHtml, getColor, getBgColor, paginate } from '../../common'
 import { useRouter } from 'next/router'
 
@@ -45,15 +45,18 @@ export default function SingleGalleryPage ({ gallery }) {
   const paginatedImages = paginate({ images: JSON.parse(JSON.stringify(gallery.low)) })
   return (
     <Root>
-		  <Cover img={coverImg}/>
-      <ContentRoot>
-        <Title>{longTitle}</Title>
-        <SSubheading>{description}</SSubheading>
-        <Content>
+		    <Cover img={coverImg}>
+        <HeadersRoot>
+            <H1>{longTitle}</H1>
+              <PSubheading>
+               {description}
+              </PSubheading>
+          </HeadersRoot>
+        </Cover>
+        <Gallery>
           <JustifyScrollGallery images={paginatedImages} width={940} open={open} />
           {activeImg !== -1 && <SwipeGallery images={gallery.high} activeImg={activeImg} close={close} setActiveImg={setActiveImg} />}
-        </Content>
-      </ContentRoot>
+        </Gallery>
       <LittleEaglePhoto />
     </Root>
   )
@@ -81,35 +84,44 @@ const Cover = styled.div`
   justify-content: center;
 `
 
-const ContentRoot = styled.div`
-  width: 100%;
+const HeadersRoot = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  margin-top: 40px;
+  width: 780px;
+  @media only screen and (max-width: 1079px) {
+    width: 525px;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 300px;
+  }
 `
 
-const Title = styled.h1`
-  font-family: Lobster;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 64px;
-  line-height: 80px;
-  color: #434850;
-  margin-top: 20px;
-  width: 620px;
-  text-align: center;
+const PSubheading = styled(Subheading)`
+  width: 95%;
+  margin-top: 25px;
+  @media only screen and (max-width: 1220px) {
+    margin-top: 15px;
+    font-size: 16px;
+    line-height: 20px;
+    width: 50%;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 80%;
+    font-size: 14px;
+    line-height: 17.5px;
+  }
 `
 
-const SSubheading = styled(Subheading)`
-  color: #434850;
-  width: 620px;
-  text-align: center;
-`
-
-const Content = styled.div`
-  width: 100%;
+const Gallery = styled.div`
+  width: 780px;
+  @media only screen and (max-width: 1079px) {
+    width: 525px;
+  }
+  @media only screen and (max-width: 660px) {
+    width: 300px;
+  }
   margin-top: 100px;
   display: flex;
   flex-direction: column;

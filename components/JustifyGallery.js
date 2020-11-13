@@ -40,7 +40,6 @@ const renderRows = ({ rows, open, margin }) => {
 }
 
 const renderRowsLazy = ({ rows, open, margin }) => {
-  console.log(margin)
   return rows.map((row, index) => {
     return (
       <Row key={index}>

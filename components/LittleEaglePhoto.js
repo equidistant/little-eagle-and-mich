@@ -2,29 +2,66 @@ import Link from 'next/link'
 import styled, { css } from 'styled-components'
 import { H2, H3, Body, Subtitle, DateLocation,  Indie} from './text'
 import { leLogoImg, vector5Img } from '../images'
+import { useWindow } from '../common'
 
 const LittleEaglePhoto = ({ color, posts }) => {
-	return (
-		<Root>
-			<Center>
-				<Column>
-					<SH3>Želiš imati ovakve fotografije za sebe?</SH3>
-					<SBody color='dark'>Imaš sreće jer Ana nudi usluge fotografiranja! </SBody>
-					<SBody color='dark'>
-						Javi joj se putem <LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>littleeaglephoto.com</LittleEagleLink> i naruči se za fotkanje!
-					</SBody>
-				</Column>
-				<Column>
-					<LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>
-						<LittleEagleLogo src={leLogoImg}/>
-					</LittleEagleLink>
-					<Vector6 src={vector5Img} />
-					<SIndie>klikni!</SIndie>
-				</Column>
+	const [width] = useWindow()
+	if (width >= 1079) {
+		return (
+			<Root>
+				<Center>
+					<Column>
+						<SH3>Želiš imati ovakve fotografije za sebe?</SH3>
+						<SBody color='dark'>Imaš sreće jer Ana nudi usluge fotografiranja! </SBody>
+						<SBody color='dark'>
+							Javi joj se putem <LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>littleeaglephoto.com</LittleEagleLink> i naruči se za fotkanje!
+						</SBody>
+					</Column>
+					<Column>
+						<LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>
+							<LittleEagleLogo src={leLogoImg}/>
+						</LittleEagleLink>
+						<Vector6 src={vector5Img} />
+						<SIndie>klikni!</SIndie>
+					</Column>
 
-			</Center>
-		</Root>
-	)
+				</Center>
+			</Root>
+		)
+	} else if (width <= 1079 && width > 0) {
+		return (
+			<Root>
+				<CenterWrap>
+					<SH3>Želiš imati ovakve fotografije za sebe?</SH3>
+					<Center>
+						<Column>
+							<SBody color='dark'>Imaš sreće jer Ana nudi usluge fotografiranja! </SBody>
+							<SBody color='dark'>
+								Javi joj se putem <LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>littleeaglephoto.com</LittleEagleLink> i naruči se za fotkanje!
+							</SBody>
+						</Column>
+						<Column>
+							<LittleEagleLink href='https://www.littleeaglephoto.com' target='_blank'>
+								<LittleEagleLogo src={leLogoImg}/>
+							</LittleEagleLink>
+							<Vector6 src={vector5Img} />
+							<SIndie>klikni!</SIndie>
+						</Column>
+
+					</Center>
+				</CenterWrap>
+			</Root>
+		)
+	} 
+	else {
+		return (
+			<Root>
+				<Center>
+					Loading...
+				</Center>
+			</Root>
+		)
+	}
 }
 
 const Root = styled.div`
@@ -37,6 +74,16 @@ const Root = styled.div`
 	margin-top: 150px;
 `
 
+const CenterWrap = styled.div`
+	width: 520px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
+`
+
 const Center = styled.div`
 	width: 760px;
 	display: flex;
@@ -45,6 +92,16 @@ const Center = styled.div`
 	align-items: center;
 	margin-top: 130px;	
 	margin-bottom: 130px;
+	@media only screen and (max-width: 1079px) {
+		align-items: flex-start;
+		width: 100%;
+		margin-top: 20px;
+		padding-right: 150px;
+	}
+	@media only screen and (max-width: 660px) {
+		padding-right: 0px;
+		margin-top:
+	}
 `
 
 const Column = styled.div`
@@ -53,13 +110,27 @@ const Column = styled.div`
 	flex-direction: column;
 `
 
-
 const SH3 = styled(H3)`
+	@media only screen and (max-width: 1079px) {
+		margin-top: 85px;
+	}
+	@media only screen and (max-width: 1079px) {
+		width: 50%;
+	}
 `
 
 const SBody = styled(Body)`
 	margin-top: 10px;
+	&:first-of-type {
+		margin-top: 0;
+	}
 	width: 379px;
+	@media only screen and (max-width: 1079px) {
+		width: 224px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 136px;
+	}
 `
 
 const LittleEagleLink = styled.a`
@@ -74,6 +145,10 @@ const LittleEagleLink = styled.a`
 const LittleEagleLogo = styled.img`
 	width: 140px;
 	height: 140px;
+	@media only screen and (max-width: 1079px) {
+		width: 100px;
+		height: 100px;
+	}
 `
 
 const Vector6 = styled.img`
@@ -82,11 +157,19 @@ const Vector6 = styled.img`
 
 	margin-top: 10px;
 	margin-left: 80px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 0px;
+		margin-left: 60px;
+	}
 `
 
 const SIndie = styled(Indie)`
 	transform: rotate(8.11deg);
 	margin-left: 120px;
 	margin-top: -30px;
+	@media only screen and (max-width: 1079px) {
+		margin-left: 100px;
+		margin-top: -20px;
+	}
 `
 export default LittleEaglePhoto

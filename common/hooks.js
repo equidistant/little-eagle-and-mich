@@ -108,12 +108,22 @@ export const useRowsLazy = ({ images, width, numOfRows, targetWidth }) => {
   const [margin, setMargin] = useState(0)
   const galleryRef = useRef(null)
   const appendRows = useCallback(({ images }) => {
+    if (!images) {
+      return
+    }
+    const width = galleryRef.current.clientWidth
+    const targetWidth = targetWidthObj[width]
     const margin = marginObj[width]
     const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
     setMargin(margin)
     setRows([...rows, ...newRows])
   }, [rows])
   const resetRows = useCallback(({ images }) => {
+    if (!images) {
+      return
+    }
+    const width = galleryRef.current.clientWidth
+    const targetWidth = targetWidthObj[width]
     const margin = marginObj[width]
     const newRows = getRows({ images, width, numOfRows, targetWidth, margin })
     setMargin(margin)
