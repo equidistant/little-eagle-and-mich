@@ -215,6 +215,7 @@ const LandscapeColumn = styled.div`
 	display: column;
 	align-items: center;
 	justify-content: flex-start;
+	object-fit: cover;
 	margin-left: ${props => props.marginleft ? props.marginleft : 0};
 	@media only screen and (max-width: 660px) {
 		width: 100%;
