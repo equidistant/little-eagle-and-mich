@@ -18,12 +18,14 @@ const AboutStory = ({ images }) => {
 						<AboutText margintop='11px'>sa što više kampiranja,</AboutText>
 					</Column>
 				</Row>
-				<Row>
-					<Column>
-						<LandscapeImg src={images[2]} />
-						<AboutText margintop='11px'>i obaveznim hammockom.</AboutText>
-					</Column>
-				</Row>
+			</Center>
+			<LandscapeRow>
+				<LandscapeColumn>
+					<LandscapeImg src={images[2]} />
+					<AboutText margintop='11px'>i obaveznim hammockom.</AboutText>
+				</LandscapeColumn>
+			</LandscapeRow>
+			<Center>
 				<Row>
 					<Column>
 						<PortraitImg src={images[3]}/>
@@ -54,12 +56,14 @@ const AboutStory = ({ images }) => {
 						<AboutText margintop='11px'>a oboje volimo promatrati svijet naopako.</AboutText>
 					</Column>
 				</Row>
-				<Row justify='flex-end'>
-					<Column>
-						<LandscapeImg src={images[9]} />
-						<AboutText margintop='11px'>Ovo je naše najdraže mjesto,</AboutText>
-					</Column>
-				</Row>
+			</Center>
+			<LandscapeRow>
+				<LandscapeColumn>
+					<LandscapeImg src={images[9]} />
+					<AboutText margintop='11px'>Ovo je naše najdraže mjesto,</AboutText>
+				</LandscapeColumn>
+			</LandscapeRow>
+			<Center>
 				<Row>
 					<Column>
 						<PortraitImg src={images[10]}/>
@@ -90,12 +94,14 @@ const AboutStory = ({ images }) => {
 						<AboutText margintop='11px'>i slučajno se spariti</AboutText>
 					</Column>
 				</Row>
-				<Row>
-					<Column>
-						<LandscapeImg src={images[16]} />
-						<AboutText margintop='11px'>nekad i pretjeramo,</AboutText>
-					</Column>
-				</Row>
+			</Center>
+			<LandscapeRow>
+				<LandscapeColumn>
+					<LandscapeImg src={images[16]} />
+					<AboutText margintop='11px'>nekad i pretjeramo,</AboutText>
+				</LandscapeColumn>
+			</LandscapeRow>
+			<Center>
 				<Row>
 					<Column>
 						<PortraitImg src={images[17]}/>
@@ -116,13 +122,13 @@ const AboutStory = ({ images }) => {
 						<AboutText margintop='11px'>Ponekad se potučemo,</AboutText>
 					</Column>
 				</Row>
-				<Row>
-					<Column>
-						<FinalImg src={images[21]}/>
-						<AboutText margintop='11px'>ali se i dalje volimo!</AboutText>
-					</Column>
-				</Row>
-				</Center>	
+			</Center>
+			<LandscapeRow>
+				<LandscapeColumn>
+					<FinalImg src={images[21]}/>
+					<AboutText margintop='11px'>ali se i dalje volimo!</AboutText>
+				</LandscapeColumn>
+			</LandscapeRow>
 		</Root>
 	)
 }
@@ -130,19 +136,31 @@ const AboutStory = ({ images }) => {
 const Root = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: center;
-	width: 940px;
+	width: 100%;
 `
 
 const Center = styled.div`
-	width: 100%;
 	display: flex;
 	flex-direction: column;
+	width: 940px;
+	@media only screen and (max-width: 1079px) {
+		width: 525px;
+	}
+	@media only screen and (max-width: 660px) {
+		width: 300px;
+	}
 `
 
 const SH2 = styled(H2)`
 	margin-top: 130px;
+	@media only screen and (max-width: 1079px) {
+		margin-top: 100px;
+	}
+	@media only screen and (max-width: 660px) {
+		margin-top: 75px;
+	}
 `
 
 const Row = styled.div`
@@ -152,6 +170,25 @@ const Row = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: ${props => props.justify ? props.justify : 'flex-start'};
+  @media only screen and (max-width: 660px) {
+	flex-direction: column;
+	}
+`
+
+const LandscapeRow = styled.div`
+  width: 940px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: ${props => props.justify ? props.justify : 'flex-start'};
+  @media only screen and (max-width: 1079px) {
+	width: 525px;
+}
+@media only screen and (max-width: 660px) {
+	width: 100%;
+}
+
 `
 
 const Column = styled.div`
@@ -159,32 +196,47 @@ const Column = styled.div`
 	align-items: center;
 	justify-content: flex-start;
 	margin-left: ${props => props.marginleft ? props.marginleft : 0};
+	@media only screen and (max-width: 660px) {
+		width: 100%;
+		margin-left: 0;
+		margin-top: ${props => props.marginleft ? props.marginleft : 0};
+		}
 `
 
 const PortraitImg = styled.img`
-  width: 459px;
+  width: 100%;
   height: 352px;
-
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
 	border-radius: 20px 2px;
 	object-fit: cover;
 `
 
+const LandscapeColumn = styled.div`
+	display: column;
+	align-items: center;
+	justify-content: flex-start;
+	margin-left: ${props => props.marginleft ? props.marginleft : 0};
+	@media only screen and (max-width: 660px) {
+		width: 100%;
+		margin-top: ${props => props.marginleft ? props.marginleft : 0};
+		justify-content: center;
+	}
+`
+
 const LandscapeImg = styled.img`
-  width: 700px;
-  height: 352px;
+  width: 100%;
+  height: 400px;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
 	border-radius: 20px 2px;	
-
+	margin-right: ${props => props.marginright ? props.marginright : 0};
 `
 
 const FinalImg = styled.img`
-  width: 940px;
+  width: 100%;
   height: 450px;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.1));
 	border-radius: 20px 2px;	
 	object-fit: cover;
-
 `
 
 

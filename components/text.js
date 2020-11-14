@@ -140,6 +140,7 @@ export const AboutText = styled.p`
   font-size: 24px;
   line-height: 30px;
   margin-top: ${props => props.margintop ? props.margintop : 0};
+  text-align: center;
 `
 
 export const Indie = styled.p`
