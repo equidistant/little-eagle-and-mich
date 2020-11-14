@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { coverWeekendImg } from '../images'
 import { H1, Subheading,  RecommendedBlogs, AllBlogs, GalleryList, YoutubeVideo, Newsletter } from '../components'
@@ -37,6 +37,7 @@ const fetcher = async (url) => {
 
 const HomePage = ({ posts, recommendedPosts, galleries }) => {
   const theme = useTheme()
+  const contentRef = useRef()
 	return (
     <Root>
         <Cover img={coverWeekendImg}>
@@ -46,13 +47,15 @@ const HomePage = ({ posts, recommendedPosts, galleries }) => {
                 <PSubheading>
                   Savjeti i ideje oko vikend izleta u Hrvatskoj i okolici, gdje i kako kampirati, što posjetiti
                 </PSubheading>
-              <SubheadingButton>
+              <SubheadingButton onClick={() => contentRef.current.scrollIntoView({
+              behavior: 'smooth'
+            })}>
                 Kreni istraživati!
               </SubheadingButton>
             </HeadersCenter>
           </HeadersRoot>
         </Cover>
-        <ContentRoot>
+        <ContentRoot ref={contentRef}>
           <RecommendedBlogs posts={recommendedPosts} color='orange'/>
           <AllBlogs title={'Vikend putopisi'} posts={posts} color='orange'/>
           <GalleryList title={'Foto galerija'} galleries={galleries} color={theme.color.orange}/>

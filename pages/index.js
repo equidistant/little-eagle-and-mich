@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { coverHomeImg } from '../images'
 import { H1, Subheading, BlogCategories, LatestBlogs, RandomGallery, YoutubeVideo, WhoAreWe, Newsletter } from '../components'
@@ -41,6 +41,7 @@ const fetcher = async (url) => {
 }
 
 const HomePage = ({ initialGalleries, initialPosts }) => {
+  const contentRef = useRef()
   const theme = useTheme()
   const [gallery, handleNext] = useRandomGallery({ initialGalleries })
 	return (
@@ -51,17 +52,19 @@ const HomePage = ({ initialGalleries, initialPosts }) => {
               <PSubheading>
                 Putopisne ideje i savjeti za ljude koji vole putovati, no nemaju puno vremena.
               </PSubheading>
-            <SubheadingButton>
+            <SubheadingButton onClick={() => contentRef.current.scrollIntoView({
+              behavior: 'smooth'
+            })}>
               Kreni na avanturu
             </SubheadingButton>
           </HeadersRoot>
         </Cover>
-        <ContentRoot>
+        <ContentRoot ref={contentRef}>
           <BlogCategories/>
           <LatestBlogs posts={initialPosts}/>
           {gallery && gallery.low && <RandomGallery longTitle={gallery.longTitle} title={gallery.title} images={gallery.low} handleNext={handleNext} />} 
           <WhoAreWe/>
-          <YoutubeVideo title='Najnovija avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/8eBgcVkIFrs'/>
+          <YoutubeVideo title='Najnovija avantura' href='/' buttonText='Odi na članak' src='https://www.youtube.com/embed/jYxED2ngrIc'/>
           <Newsletter color={theme.color.orange} bgColor={theme.color.lightOrange}/>
         </ContentRoot>
     </Root>
